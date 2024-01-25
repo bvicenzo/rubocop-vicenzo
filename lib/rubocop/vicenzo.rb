@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'vicenzo/version'
+require 'zeitwerk'
+loader = Zeitwerk::Loader.for_gem
+loader.setup
+
 
 module Rubocop
   module Vicenzo
-    class Error < StandardError; end
-    # Your code goes here...
   end
 end
