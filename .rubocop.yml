@@ -1,0 +1,7 @@
+plugins:
+  - rubocop-internal_affairs
+  - rubocop-vicenzo
+
+Naming/FileName:
+  Exclude:
+    - lib/rubocop-vicenzo.rb
