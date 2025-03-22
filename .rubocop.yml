@@ -1,5 +1,6 @@
 plugins:
   - rubocop-internal_affairs
+  - rubocop-rspec
   - rubocop-vicenzo
 
 Naming/FileName:
