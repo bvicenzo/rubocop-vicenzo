@@ -57,6 +57,8 @@ module RuboCop
             check_let_redefinitions(node, {}) if example_group?(node)
           end
 
+          alias on_numblock on_block
+
           private
 
           def check_let_redefinitions(node, let_definitions)
