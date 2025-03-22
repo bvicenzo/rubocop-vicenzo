@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
-  let(:config) { RuboCop::Config.new }
-
-  context "when there is a single nested let" do
-    it "registers an offense for a single nested let inside a examples group" do
+  context 'when there is a single nested let' do
+    it 'registers an offense for a single nested let inside a examples group' do
       expect_offense(<<~RUBY)
         RSpec.describe "Example" do
           let(:foo) { 42 }
@@ -22,8 +20,8 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
     end
   end
 
-  context "when there are multiple nested contexts with let" do
-    it "registers offenses for each nested let inside a examples group" do
+  context 'when there are multiple nested contexts with let' do
+    it 'registers offenses for each nested let inside a examples group' do
       expect_offense(<<~RUBY)
         RSpec.describe "Example" do
           let(:foo) { 42 }
@@ -47,8 +45,8 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
     end
   end
 
-  context "when let is not nested inside a examples group" do
-    it "does not register an offense" do
+  context 'when let is not nested inside a examples group' do
+    it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         RSpec.describe "Example" do
           let(:foo) { 42 }
