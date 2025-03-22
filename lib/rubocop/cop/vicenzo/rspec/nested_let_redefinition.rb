@@ -65,16 +65,20 @@ module RuboCop
                 if example_group?(child)
                   check_let_redefinitions(child, let_definitions.dup)
                 elsif let?(child)
-                  name = let_name(child).to_s.to_sym
-
-                  if let_definitions.key?(name)
-                    add_offense(child, message: redefined_let_message(name, let_definitions))
-                    let_definitions[name] << line_location(child)
-                  else
-                    let_definitions[name] = [line_location(child)]
-                  end
+                  check_let(child, let_definitions)
                 end
               end
+            end
+          end
+
+          def check_let(let_node, let_definitions)
+            name = let_name(let_node).to_s.to_sym
+
+            if let_definitions.key?(name)
+              add_offense(let_node, message: redefined_let_message(name, let_definitions))
+              let_definitions[name] << line_location(let_node)
+            else
+              let_definitions[name] = [line_location(let_node)]
             end
           end
 
