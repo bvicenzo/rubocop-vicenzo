@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
+  let(:config) { RuboCop::Config.new }
+
   context 'when there is a single nested let' do
     it 'registers an offense for a single nested let inside a examples group' do
       expect_offense(<<~RUBY)

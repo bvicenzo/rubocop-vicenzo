@@ -61,13 +61,13 @@ module RuboCop
 
           def check_let_redefinitions(node, let_definitions)
             node.body.each_child_node do |child|
-              if child.type == :block
+              if child.block_type?
                 if example_group?(child)
                   check_let_redefinitions(child, let_definitions.dup)
                 elsif let?(child)
                   name = let_name(child).to_s.to_sym
 
-                  if let_definitions.has_key?(name)
+                  if let_definitions.key?(name)
                     add_offense(child, message: redefined_let_message(name, let_definitions))
                     let_definitions[name] << line_location(child)
                   else
@@ -83,7 +83,7 @@ module RuboCop
           end
 
           def line_location(node)
-            node.loc.expression.line
+            node.source_range.line
           end
         end
       end
