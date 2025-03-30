@@ -3,6 +3,9 @@ plugins:
   - rubocop-rspec
   - rubocop-vicenzo
 
+AllCops:
+  NewCops: enable
+
 Naming/FileName:
   Exclude:
     - lib/rubocop-vicenzo.rb
