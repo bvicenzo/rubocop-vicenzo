@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
-  let(:config) { RuboCop::Config.new }
-
+RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :rspec_config do
   context 'when there is a single nested let' do
     it 'registers an offense for a single nested let inside a examples group' do
       expect_offense(<<~RUBY)
@@ -11,7 +9,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
 
           context "sub context" do
             let(:foo) { 43 }
-            ^^^^^^^^^^^^^^^^ Vicenzo/RSpec/NestedLetRedefinition: Let `:foo` is already defined in ancestor(s) block(s) at: 2.
+            ^^^^^^^^^^^^^^^^ Let `:foo` is already defined in ancestor(s) block(s) at: 2.
 
             it "example" do
               expect(true).to eq(true)
@@ -31,11 +29,11 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :config do
 
           describe "sub describe" do
             let(:foo) { 43 }
-            ^^^^^^^^^^^^^^^^ Vicenzo/RSpec/NestedLetRedefinition: Let `:foo` is already defined in ancestor(s) block(s) at: 2.
+            ^^^^^^^^^^^^^^^^ Let `:foo` is already defined in ancestor(s) block(s) at: 2.
 
             context "sub context" do
               let(:foo) { 44 }
-              ^^^^^^^^^^^^^^^^ Vicenzo/RSpec/NestedLetRedefinition: Let `:foo` is already defined in ancestor(s) block(s) at: 2, 6.
+              ^^^^^^^^^^^^^^^^ Let `:foo` is already defined in ancestor(s) block(s) at: 2, 6.
 
               it "example" do
                 expect(true).to eq(true)
