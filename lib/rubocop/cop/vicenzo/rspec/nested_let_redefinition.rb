@@ -53,6 +53,22 @@ module RuboCop
             }
           PATTERN
 
+          # @!method let_it_be_name(node)
+          def_node_matcher :let_it_be_name, <<~PATTERN
+            {
+              (block (send nil? {:let_it_be :let_it_be!} ({str sym} $_) ...) ...)
+              (send nil? {:let_it_be :let_it_be!} ({str sym} $_) block_pass)
+            }
+          PATTERN
+
+          # @!method let_it_be?(node)
+          def_node_matcher :let_it_be?, <<~PATTERN
+            {
+              (block (send nil? {:let_it_be :let_it_be!} ...) ...)
+              (send nil? {:let_it_be :let_it_be!} _ block_pass)
+            }
+          PATTERN
+
           def on_block(node)
             check_let_redefinitions(node, {}) if example_group?(node)
           end
@@ -66,7 +82,7 @@ module RuboCop
               if child.block_type?
                 if example_group?(child)
                   check_let_redefinitions(child, let_definitions.dup)
-                elsif let?(child)
+                elsif let?(child) || let_it_be?(child)
                   check_let(child, let_definitions)
                 end
               end
@@ -74,7 +90,7 @@ module RuboCop
           end
 
           def check_let(let_node, let_definitions)
-            name = let_name(let_node).to_s.to_sym
+            name = (let_name(let_node) || let_it_be_name(let_node)).to_s.to_sym
 
             if let_definitions.key?(name)
               add_offense(let_node, message: redefined_let_message(name, let_definitions))
