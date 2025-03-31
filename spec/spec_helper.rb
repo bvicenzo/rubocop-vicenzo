@@ -2,6 +2,7 @@
 
 require 'rubocop-vicenzo'
 require 'rubocop/rspec/support'
+require 'rubocop/rspec/shared_contexts/default_rspec_language_config_context'
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
@@ -11,4 +12,5 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand config.seed
+  config.include_context 'with default RSpec/Language config', :rspec_config
 end

@@ -1,1 +1,7 @@
 # Write it!
+
+Vicenzo/RSpec/NestedLetRedefinition:
+  Description: 'Check if a let is redefined in a nested example group.'
+  Enabled: true
+  Severity: warning
+  VersionAdded: '0.1.0'

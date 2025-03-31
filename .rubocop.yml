@@ -9,3 +9,6 @@ AllCops:
 Naming/FileName:
   Exclude:
     - lib/rubocop-vicenzo.rb
+
+RSpec/ExampleLength:
+  Enabled: false

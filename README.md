@@ -1,5 +1,6 @@
 # RuboCop::Vicenzo
 
+[![Ruby](https://github.com/bvicenzo/rubocop-vicenzo/actions/workflows/main.yml/badge.svg)](https://github.com/bvicenzo/rubocop-vicenzo/actions/workflows/main.yml)
 
 ## Installation
 
