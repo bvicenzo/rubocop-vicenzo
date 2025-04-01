@@ -5,3 +5,8 @@ Vicenzo/RSpec/NestedLetRedefinition:
   Enabled: true
   Severity: warning
   VersionAdded: '0.1.0'
+
+Vicenzo/RSpec/NestedSubjectRedefinition:
+  Description: 'Check if a subject is redefined in a nested example group'
+  Enabled: warning
+  VersionAdded: '0.1.0'
