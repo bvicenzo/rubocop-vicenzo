@@ -1,7 +1,9 @@
 plugins:
-  - rubocop-internal_affairs
+  - rubocop-performance
+  - rubocop-rake
   - rubocop-rspec
   - rubocop-vicenzo
+  - rubocop-internal_affairs
 
 AllCops:
   NewCops: enable

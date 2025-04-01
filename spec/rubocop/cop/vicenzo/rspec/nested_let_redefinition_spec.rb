@@ -97,6 +97,10 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :rspec_confi
 
           context "sub context" do
             let(:bar) { 43 }
+
+            it "example" do
+              expect(true).to eq(true)
+            end
           end
         end
       RUBY
@@ -111,6 +115,10 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :rspec_confi
 
           context "sub context" do
             let_it_be(:bar) { 43 }
+
+            it "example" do
+              expect(true).to eq(true)
+            end
           end
         end
       RUBY
