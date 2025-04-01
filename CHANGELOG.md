@@ -4,4 +4,4 @@
 
 - Initial release;
 - Add RoboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition #1;
-- Add RoboCop::Cop::Vicenzo::RSpec::NestedSubjectRedefinition;
+- Add RoboCop::Cop::Vicenzo::RSpec::NestedSubjectRedefinition #2;
