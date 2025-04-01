@@ -1,4 +1,7 @@
-# Write it!
+Vicenzo/RSpec/NestedContextImproperStart:
+  Description: 'Check if the nested context does not start as a root one.'
+  Enabled: pending
+  VersionAdded: '0.1.0'
 
 Vicenzo/RSpec/NestedLetRedefinition:
   Description: 'Check if a let is redefined in a nested example group.'
@@ -7,11 +10,11 @@ Vicenzo/RSpec/NestedLetRedefinition:
   VersionAdded: '0.1.0'
 
 Vicenzo/RSpec/NestedSubjectRedefinition:
-  Description: 'Check if a subject is redefined in a nested example group'
+  Description: 'Check if a subject is redefined in a nested example group.'
   Enabled: warning
   VersionAdded: '0.1.0'
 
 Vicenzo/Rails/EnumInclusionOfValidation:
-  Description: 'TODO: Write a description of the cop.'
+  Description: 'Check if the enum has the inclusion of validation defined.'
   Enabled: convention
   VersionAdded: '0.1.0'
