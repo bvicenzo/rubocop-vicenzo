@@ -12,5 +12,16 @@ Naming/FileName:
   Exclude:
     - lib/rubocop-vicenzo.rb
 
+RSpec/ContextWording:
+  Prefixes:
+    - and
+    - but
+    - when
+    - with
+    - without
+
 RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/NestedGroups:
   Enabled: false
