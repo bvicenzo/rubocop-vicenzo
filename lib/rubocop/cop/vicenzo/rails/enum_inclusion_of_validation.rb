@@ -45,22 +45,14 @@ module RuboCop
 
             validate_kwarg = find_validate_option(node)
 
-            if validate_kwarg.nil?
-              add_offense(node, message: MSG_MISSING_VALIDATE) do |corrector|
-                corrector.insert_after(last_hash_node(node), ', validate: { allow_nil: true }')
-              end
-            elsif !valid_validate_option?(validate_kwarg)
-              add_offense(validate_kwarg, message: MSG_INVALID_VALIDATE) do |corrector|
-                corrector.replace(validate_kwarg, 'validate: { allow_nil: true }')
-              end
-            end
+            register_offence_for(node, validate_kwarg)
           end
           alias on_csend on_send
 
           private
 
-          def find_validate_option(node)
-            node.last_argument.each_pair.find { |pair| pair.key.value == :validate }
+          def find_validate_option(enum_node)
+            enum_node.last_argument.each_pair.find { |pair| pair.key.value == :validate }
           end
 
           def valid_validate_option?(validate_kwarg)
@@ -70,8 +62,20 @@ module RuboCop
               end
           end
 
-          def last_hash_node(node)
-            node.last_argument if node.last_argument.hash_type?
+          def last_hash_node(enum_node)
+            enum_node.last_argument if enum_node.last_argument.hash_type?
+          end
+
+          def register_offence_for(enum_node, validate_kwarg)
+            if validate_kwarg.nil?
+              add_offense(enum_node, message: MSG_MISSING_VALIDATE) do |corrector|
+                corrector.insert_after(last_hash_node(enum_node), ', validate: { allow_nil: true }')
+              end
+            elsif !valid_validate_option?(validate_kwarg)
+              add_offense(validate_kwarg, message: MSG_INVALID_VALIDATE) do |corrector|
+                corrector.replace(validate_kwarg, 'validate: { allow_nil: true }')
+              end
+            end
           end
         end
       end
