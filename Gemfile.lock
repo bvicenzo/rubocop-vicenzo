@@ -48,6 +48,13 @@ GEM
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.41.0)
       parser (>= 3.3.7.2)
+    rubocop-performance (1.24.0)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.72.1, < 2.0)
+      rubocop-ast (>= 1.38.0, < 2.0)
+    rubocop-rake (0.7.1)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.72.1)
     rubocop-rspec (3.5.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -64,6 +71,8 @@ DEPENDENCIES
   rake (~> 13.0)
   rspec
   rubocop (>= 1.72.2)
+  rubocop-performance
+  rubocop-rake
   rubocop-vicenzo!
 
 BUNDLED WITH
