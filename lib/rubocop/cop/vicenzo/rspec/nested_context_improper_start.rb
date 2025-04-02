@@ -21,38 +21,37 @@ module RuboCop
         #       it 'does not show the pink option'
         #     end
         #   end
-        class NestedContextImproperStart < Base
+        class NestedContextImproperStart < RuboCop::Cop::RSpec::Base
           MSG = 'Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.'
-          INVALID_PREFIXES = %w[when with without].freeze
+
+          FORBIDDEN_PREFIXES = %w[when with without].freeze
 
           def on_block(node)
-            return unless context_with_string?(node)
+            return unless context_block?(node) && context_block?(node.parent)
 
-            parent = node.parent
-            return unless parent&.block_type? && context_with_string?(parent)
+            context_description = description_for(node)
+            return unless context_description
 
-            inner_context, = *node.send_node.arguments
-            return unless inner_context.str_type? && starts_with_invalid_prefix?(inner_context.value)
+            first_word = context_description.split.first&.downcase
+            return unless FORBIDDEN_PREFIXES.include?(first_word)
 
-            add_offense(inner_context)
+            add_offense(node.send_node)
           end
 
           alias on_numblock on_block
 
           private
 
-          def context_with_string?(node)
-            return false unless node.block_type?
-
-            send_node = node.send_node
-            return false unless send_node&.send_type? && send_node.method?(:context)
-
-            first_argument, = *send_node.arguments
-            first_argument&.str_type?
+          def context_block?(node)
+            !node.nil? && node.block_type? && node.send_node.command?(:context)
           end
 
-          def starts_with_invalid_prefix?(value)
-            INVALID_PREFIXES.any? { |prefix| value.match?(/^#{prefix} /i) }
+          def description_for(context_node)
+            description = context_node.send_node.first_argument
+
+            return if description.nil?
+
+            description.source.delete_prefix("'").delete_suffix("'")
           end
         end
       end

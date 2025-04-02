@@ -16,7 +16,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart, :rspec_
       expect_offense(<<~RUBY)
         context 'when the product is for sale' do
           context 'when the color pink is not available' do
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
             it 'does not show the pink option'
           end
         end
@@ -29,7 +29,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart, :rspec_
       expect_offense(<<~RUBY)
         context 'when the product is for sale' do
           context 'with the color pink unavailable' do
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
             it 'does not show the pink option'
           end
         end
@@ -42,7 +42,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart, :rspec_
       expect_offense(<<~RUBY)
         context 'when the product is for sale' do
           context 'without the color pink available' do
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
             it 'does not show the pink option'
           end
         end
