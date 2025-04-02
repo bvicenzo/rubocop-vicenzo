@@ -7,3 +7,5 @@
 - Add RoboCop::Cop::Vicenzo::RSpec::NestedSubjectRedefinition #2;
 - Add RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation #3;
 - Add RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart #4;
+
+- Change RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart inherits from Rspec::Base #5;
