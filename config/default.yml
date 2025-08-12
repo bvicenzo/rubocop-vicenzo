@@ -1,11 +1,19 @@
+Vicenzo/Rails/EnumInclusionOfValidation:
+  Description: 'Check if the enum has the inclusion of validation defined.'
+  Enabled: true
+  Severity: convention
+  VersionAdded: '0.1.0'
+
 Vicenzo/RSpec/MixedExampleGroups:
   Description: 'Check if there are example and groups at same level'
-  Enabled: warning
+  Enabled: true
+  Severity: warning
   VersionAdded: '0.1.0'
 
 Vicenzo/RSpec/NestedContextImproperStart:
   Description: 'Check if the nested context does not start as a root one.'
-  Enabled: warning
+  Enabled: true
+  Severity: convention
   VersionAdded: '0.1.0'
 
 Vicenzo/RSpec/NestedLetRedefinition:
@@ -16,10 +24,6 @@ Vicenzo/RSpec/NestedLetRedefinition:
 
 Vicenzo/RSpec/NestedSubjectRedefinition:
   Description: 'Check if a subject is redefined in a nested example group.'
-  Enabled: warning
-  VersionAdded: '0.1.0'
-
-Vicenzo/Rails/EnumInclusionOfValidation:
-  Description: 'Check if the enum has the inclusion of validation defined.'
-  Enabled: convention
+  Enabled: true
+  Severity: warning
   VersionAdded: '0.1.0'
