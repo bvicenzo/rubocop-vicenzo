@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.1.1] - 2025-08-12
+
 - Add Rightly enable all cops #7;
 - Fix RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation working with array format and no options #7;
 
