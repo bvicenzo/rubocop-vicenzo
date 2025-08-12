@@ -52,7 +52,7 @@ module RuboCop
           private
 
           def find_validate_option(enum_node)
-            enum_node.last_argument.each_pair.find { |pair| pair.key.value == :validate }
+            options_node_for(enum_node)&.each_pair&.find { |pair| pair.key.value == :validate }
           end
 
           def valid_validate_option?(validate_kwarg)
@@ -62,14 +62,15 @@ module RuboCop
               end
           end
 
-          def last_hash_node(enum_node)
+          def options_node_for(enum_node)
             enum_node.last_argument if enum_node.last_argument.hash_type?
           end
 
           def register_offence_for(enum_node, validate_kwarg)
             if validate_kwarg.nil?
               add_offense(enum_node, message: MSG_MISSING_VALIDATE) do |corrector|
-                corrector.insert_after(last_hash_node(enum_node), ', validate: { allow_nil: true }')
+                last_node = options_node_for(enum_node) || enum_node.last_argument
+                corrector.insert_after(last_node, ', validate: { allow_nil: true }')
               end
             elsif !valid_validate_option?(validate_kwarg)
               add_offense(validate_kwarg, message: MSG_INVALID_VALIDATE) do |corrector|
