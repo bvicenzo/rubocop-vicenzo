@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ['bruno@alumni.usp.br']
 
   spec.summary = 'Cops of Bruno Vicenzo'
-  spec.description = 'Cops with good pratices I have been learning'
+  spec.description = "A growing set of custom RuboCop cops capturing the best practices I've been learning."
   spec.homepage = 'https://github.com/bvicenzo/rubocop-vicenzo'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.1.0'
