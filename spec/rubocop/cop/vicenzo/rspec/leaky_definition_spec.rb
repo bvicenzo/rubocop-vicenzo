@@ -5,7 +5,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LeakyDefinition, :rspec_config do
     it 'registers an offense for a top-level method' do
       expect_offense(<<~RUBY)
         def my_global_helper
-        ^^^^^^^^^^^^^^^^^^^^ Do not define methods, classes, or modules directly in the global scope or within spec blocks. This pollutes the namespace. Move this logic to `spec/support`, use `let`, or encapsulate it within a safe structure (e.g., `Class.new`).
+        ^^^^^^^^^^^^^^^^^^^^ Do not define methods, classes, or modules directly in the global scope or within spec blocks. This pollutes the namespace. Move this logic to `spec/support`, use `let`, before, or encapsulate it within a safe structure (e.g., `Class.new`).
         end
 
         RSpec.describe MyClass do
@@ -84,7 +84,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LeakyDefinition, :rspec_config do
     it 'registers offense for the root Module, but ignores the method inside (method is safe)' do
       expect_offense(<<~RUBY)
         module SafeHelpers
-        ^^^^^^^^^^^^^^^^^^ Do not define methods, classes, or modules directly in the global scope or within spec blocks. This pollutes the namespace. Move this logic to `spec/support`, use `let`, or encapsulate it within a safe structure (e.g., `Class.new`).
+        ^^^^^^^^^^^^^^^^^^ Do not define methods, classes, or modules directly in the global scope or within spec blocks. This pollutes the namespace. Move this logic to `spec/support`, use `let`, before, or encapsulate it within a safe structure (e.g., `Class.new`).
           def safe_method
             # valid logic - Repara que aqui não há sublinhado (^^^^), logo é seguro!
           end

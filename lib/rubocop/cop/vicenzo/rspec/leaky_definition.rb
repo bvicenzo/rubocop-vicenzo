@@ -24,6 +24,11 @@ module RuboCop
         #   def global_helper
         #   end
         #
+        #   # bad
+        #   def stub_service
+        #     allow(Service).to receive(:call)
+        #   end
+        #
         #   # good
         #   describe User do
         #     let(:user) { create(:user) }
@@ -36,10 +41,15 @@ module RuboCop
         #     end
         #   end
         #
+        #   # good
+        #   before do
+        #     allow(Service).to receive(:call)
+        #   end
+        #
         class LeakyDefinition < RuboCop::Cop::RSpec::Base
           MSG = 'Do not define methods, classes, or modules directly in the global scope or within spec blocks. ' \
                 'This pollutes the namespace. ' \
-                'Move this logic to `spec/support`, use `let`, ' \
+                'Move this logic to `spec/support`, use `let`, before, ' \
                 'or encapsulate it within a safe structure (e.g., `Class.new`).'
 
           # Matcher to identify dynamic class/module definitions commonly used in specs
