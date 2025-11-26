@@ -26,7 +26,7 @@ RSpec/ExampleLength:
 RSpec/NestedGroups:
   Enabled: false
 
-Vicenzo/RSpec/NoMethodInSpec:
+Vicenzo/RSpec/LeakyDefinition:
   Exclude:
     - 'spec/support/**/*'
     - 'spec/rubocop/cop/vicenzo/rspec/leaky_definition_spec.rb'
