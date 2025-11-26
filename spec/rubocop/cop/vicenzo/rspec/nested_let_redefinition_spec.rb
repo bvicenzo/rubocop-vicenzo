@@ -124,4 +124,28 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedLetRedefinition, :rspec_confi
       RUBY
     end
   end
+
+  context 'when let is redefined in sibling groups' do
+    it 'registers offenses pointing ONLY to the parent when multiple siblings' do
+      expect_offense(<<~RUBY)
+        RSpec.describe "Example" do
+          let(:foo) { 0 }
+
+          context "sibling A" do
+            let(:foo) { 1 }
+            ^^^^^^^^^^^^^^^ Let `:foo` is already defined in ancestor(s) block(s) at: 2.
+
+            expect(true).to be_truthy
+          end
+
+          context "sibling B" do
+            let(:foo) { 2 }
+            ^^^^^^^^^^^^^^^ Let `:foo` is already defined in ancestor(s) block(s) at: 2.
+
+            expect(true).to be_truthy
+          end
+        end
+      RUBY
+    end
+  end
 end
