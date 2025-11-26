@@ -70,9 +70,7 @@ module RuboCop
           PATTERN
 
           def on_block(node)
-            return unless example_group?(node)
-
-            check_let_redefinitions(node, {})
+            check_let_redefinitions(node, {}) if example_group?(node)
           end
 
           alias on_numblock on_block
