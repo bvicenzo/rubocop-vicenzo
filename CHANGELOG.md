@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Add RoboCop::Cop::Vicenzo::RSpec::LeakyDefinition;
+
+
 ## [0.1.1] - 2025-08-12
 
 - Add Rightly enable all cops #7;
