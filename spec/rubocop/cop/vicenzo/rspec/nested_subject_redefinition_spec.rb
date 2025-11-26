@@ -82,7 +82,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedSubjectRedefinition, :rspec_c
     end
   end
 
-    context 'when subject is redefined in sibling groups' do
+  context 'when subject is redefined in sibling groups' do
     it 'registers offenses pointing ONLY to the parent when multiple siblings' do
       expect_offense(<<~RUBY)
         RSpec.describe "Example" do
