@@ -10,12 +10,6 @@ Vicenzo/RSpec/InconsistentSiblingStructure:
   Severity: warning
   VersionAdded: '0.1.0'
 
-Vicenzo/RSpec/MixedExampleGroups:
-  Description: 'Check if there are example and groups at same level'
-  Enabled: true
-  Severity: warning
-  VersionAdded: '0.1.0'
-
 Vicenzo/RSpec/NestedContextImproperStart:
   Description: 'Check if the nested context does not start as a root one.'
   Enabled: true
