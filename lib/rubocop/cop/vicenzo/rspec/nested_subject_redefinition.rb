@@ -96,7 +96,7 @@ module RuboCop
 
             if subject_definitions.key?(name)
               add_offense(subject_node, message: redefined_subject_message(name, subject_definitions))
-              subject_definitions[name] << line_location(subject_node)
+              subject_definitions[name] += [line_location(subject_node)]
             else
               subject_definitions[name] = [line_location(subject_node)]
             end

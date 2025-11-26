@@ -81,4 +81,25 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedSubjectRedefinition, :rspec_c
       RUBY
     end
   end
+
+    context 'when subject is redefined in sibling groups' do
+    it 'registers offenses pointing ONLY to the parent when multiple siblings' do
+      expect_offense(<<~RUBY)
+        RSpec.describe "Example" do
+          subject(:foo) { 0 }
+
+          context "sibling A" do
+            subject(:foo) { 1 }
+            ^^^^^^^^^^^^^^^^^^^ Subject `:foo` is already defined in ancestor(s) block(s) at: 2.
+            expect(true).to be_truthy
+          end
+          context "sibling B" do
+            subject(:foo) { 2 }
+            ^^^^^^^^^^^^^^^^^^^ Subject `:foo` is already defined in ancestor(s) block(s) at: 2.
+            expect(true).to be_truthy
+          end
+        end
+      RUBY
+    end
+  end
 end
