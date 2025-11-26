@@ -85,4 +85,25 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart, :rspec_
       RUBY
     end
   end
+
+  context 'when nesting contexts deep inside each other' do
+    it 'registers offenses for all nested levels' do
+      expect_offense(<<~RUBY)
+        describe 'System' do
+          context 'when logic A' do
+            let(:foo) { 'bar' }
+
+            context 'when logic B' do
+            ^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
+              # ...
+              context "with logic C" do
+              ^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.
+                 # ...
+              end
+            end
+          end
+        end
+      RUBY
+    end
+  end
 end
