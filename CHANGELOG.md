@@ -1,6 +1,6 @@
 ## [Unreleased]
 
-- Add RoboCop::Cop::Vicenzo::RSpec::LeakyDefinition;
+- Add RoboCop::Cop::Vicenzo::RSpec::LeakyDefinition #9;
 
 
 ## [0.1.1] - 2025-08-12
