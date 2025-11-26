@@ -27,3 +27,14 @@ Vicenzo/RSpec/NestedSubjectRedefinition:
   Enabled: true
   Severity: warning
   VersionAdded: '0.1.0'
+
+Vicenzo/RSpec/LeakyDefinition:
+  Description: 'Do not define methods, classes, or modules directly in spec files (unless inside spec/support).'
+  Enabled: true
+  Severity: warning
+  VersionAdded: '0.2.0'
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
