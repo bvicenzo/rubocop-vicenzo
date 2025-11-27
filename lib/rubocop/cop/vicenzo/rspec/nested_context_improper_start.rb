@@ -26,10 +26,12 @@ module RuboCop
 
           FORBIDDEN_PREFIXES = %w[when with without].freeze
 
+          # @!method context_block?(node)
           def_node_matcher :context_block?, <<~PATTERN
             (block (send nil? :context ...) ...)
           PATTERN
 
+          # @!method example_group_block?(node)
           def_node_matcher :example_group_block?, <<~PATTERN
             (block (send nil? {:describe :context :feature :example_group} ...) ...)
           PATTERN
@@ -60,9 +62,9 @@ module RuboCop
             text = description_node.value.to_s.strip
             first_word = text.split.first&.downcase
 
-            if FORBIDDEN_PREFIXES.include?(first_word)
-              add_offense(node.send_node)
-            end
+            return unless FORBIDDEN_PREFIXES.include?(first_word)
+
+            add_offense(node.send_node)
           end
         end
       end
