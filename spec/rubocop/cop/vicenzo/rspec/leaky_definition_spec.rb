@@ -103,4 +103,32 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LeakyDefinition, :rspec_config do
       RUBY
     end
   end
+
+  context 'when using rspec-rails anonymous controller helper' do
+    it 'does not register an offense for methods defined inside controller block' do
+      expect_no_offenses(<<~RUBY)
+        RSpec.describe Admin::BaseController do
+          describe '.rescue_from' do
+            # O bloco controller cria uma classe anónima, então é seguro!
+            controller(described_class) do
+              def new
+                raise Admin::BaseController::Unauthorized
+              end
+
+              def show
+                raise ActiveRecord::RecordNotFound
+              end
+            end
+
+            context 'when Unauthorized error is raised' do
+              it 'returns status 403' do
+                get :new
+                expect(response).to be_unauthorized
+              end
+            end
+          end
+        end
+      RUBY
+    end
+  end
 end

@@ -54,12 +54,15 @@ module RuboCop
 
           # Matcher to identify dynamic class/module definitions commonly used in specs
           # Looks for blocks applied to Class.new, Module.new, or Struct.new
+          # considers controller {} a valid mock
           # @!method dynamic_definition?(node)
           def_node_matcher :dynamic_definition?, <<~PATTERN
-              (block
-                (send
-                  (const {nil? cbase} {:Class :Module :Struct}) :new ...)
-                ...
+            (block
+              {
+                (send (const {nil? cbase} {:Class :Module :Struct}) :new ...)
+                (send nil? :controller ...)
+              }
+              ...
             )
           PATTERN
 

@@ -26,32 +26,45 @@ module RuboCop
 
           FORBIDDEN_PREFIXES = %w[when with without].freeze
 
+          # @!method context_block?(node)
+          def_node_matcher :context_block?, <<~PATTERN
+            (block (send nil? :context ...) ...)
+          PATTERN
+
+          # @!method example_group_block?(node)
+          def_node_matcher :example_group_block?, <<~PATTERN
+            (block (send nil? {:describe :context :feature :example_group} ...) ...)
+          PATTERN
+
           def on_block(node)
-            return unless context_block?(node) && context_block?(node.parent)
+            return unless context_block?(node)
 
-            context_description = description_for(node)
-            return unless context_description
+            parent = find_closest_example_group(node)
 
-            first_word = context_description.split.first&.downcase
-            return unless FORBIDDEN_PREFIXES.include?(first_word)
+            return unless parent && context_block?(parent)
 
-            add_offense(node.send_node)
+            check_description(node)
           end
 
           alias on_numblock on_block
 
           private
 
-          def context_block?(node)
-            !node.nil? && node.block_type? && node.send_node.command?(:context)
+          def find_closest_example_group(node)
+            node.each_ancestor(:block).find { |ancestor| example_group_block?(ancestor) }
           end
 
-          def description_for(context_node)
-            description = context_node.send_node.first_argument
+          def check_description(node)
+            description_node = node.send_node.first_argument
 
-            return if description.nil?
+            return unless description_node&.str_type?
 
-            description.source.delete_prefix("'").delete_suffix("'")
+            text = description_node.value.to_s.strip
+            first_word = text.split.first&.downcase
+
+            return unless FORBIDDEN_PREFIXES.include?(first_word)
+
+            add_offense(node.send_node)
           end
         end
       end

@@ -90,11 +90,12 @@ module RuboCop
           end
 
           def check_let(let_node, let_definitions)
-            name = (let_name(let_node) || let_it_be_name(let_node)).to_s.to_sym
+            name = (let_name(let_node) || let_it_be_name(let_node))&.to_s&.to_sym
 
             if let_definitions.key?(name)
               add_offense(let_node, message: redefined_let_message(name, let_definitions))
-              let_definitions[name] << line_location(let_node)
+
+              let_definitions[name] += [line_location(let_node)]
             else
               let_definitions[name] = [line_location(let_node)]
             end

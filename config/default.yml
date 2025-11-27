@@ -4,11 +4,11 @@ Vicenzo/Rails/EnumInclusionOfValidation:
   Severity: convention
   VersionAdded: '0.1.0'
 
-Vicenzo/RSpec/MixedExampleGroups:
-  Description: 'Check if there are example and groups at same level'
+Vicenzo/RSpec/InconsistentSiblingStructure:
+  Description: 'Enforces strict structural consistency (e.g. prevents mixing describe with context or examples with groups).'
   Enabled: true
   Severity: warning
-  VersionAdded: '0.1.0'
+  VersionAdded: '0.2.0'
 
 Vicenzo/RSpec/NestedContextImproperStart:
   Description: 'Check if the nested context does not start as a root one.'
