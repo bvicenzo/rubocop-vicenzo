@@ -1,6 +1,13 @@
 ## [Unreleased]
 
+- Remove RuboCop::Cop::Vicenzo::RSpec::MixedExampleGroups in favor of InconsistentSiblingStructure;
+
 - Add RoboCop::Cop::Vicenzo::RSpec::LeakyDefinition #9;
+- Add RoboCop::Cop::Vicenzo::RSpec::InconsistentSiblingStructure;
+
+- Fix NestedContextImproperStart to deal with all nested contexts;
+- Fix NestedLetRedefinition to not point sibling lets as nested;
+- Fix NestedSubjectRedefinition to not point sibling lets as nested;
 
 
 ## [0.1.1] - 2025-08-12
