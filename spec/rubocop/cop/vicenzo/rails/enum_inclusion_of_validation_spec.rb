@@ -2,7 +2,7 @@
 
 RSpec.describe RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation, :config do
   context 'when the enum is in a single line' do
-    context 'when enum is in old rails style' do
+    context 'and enum is in old rails style' do
       it 'ignores enums' do
         expect_no_offenses(<<~RUBY)
           enum status: { active: 1, inactive: 0 }
@@ -10,7 +10,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation, :config 
       end
     end
 
-    context 'when enum is array format' do
+    context 'and enum is array format' do
       context 'and no option is provided' do
         it 'detects suggests correction' do
           expect_offense(<<~RUBY)
@@ -61,7 +61,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation, :config 
       end
     end
 
-    context 'when validate option is missing' do
+    context 'but validate option is missing' do
       it 'detects suggests correction' do
         expect_offense(<<~RUBY)
           enum :status, { active: 1, inactive: 0 }, suffix: true
@@ -74,7 +74,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation, :config 
       end
     end
 
-    context 'when there is validate option' do
+    context 'and there is validate option' do
       context 'but the allow_nil option is missing' do
         it 'detects and corrects it' do
           expect_offense(<<~RUBY)
@@ -99,7 +99,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation, :config 
   end
 
   context 'when the enum is in multiple lines' do
-    context 'when validate option is missing' do
+    context 'but validate option is missing' do
       it 'detects and suggests correction' do
         expect_offense(<<~RUBY)
           enum :status,
@@ -116,7 +116,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Rails::EnumInclusionOfValidation, :config 
       end
     end
 
-    context 'when there is validate option' do
+    context 'and there is validate option' do
       context 'but the allow_nil option is missing' do
         it 'detects and corrects it' do
           expect_offense(<<~RUBY)
