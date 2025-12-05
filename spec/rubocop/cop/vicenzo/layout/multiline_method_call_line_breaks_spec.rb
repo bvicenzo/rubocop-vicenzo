@@ -20,20 +20,40 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks, :co
       end
 
       context 'and a middle method is attached to the previous one' do
-        it 'registers an offense on the specific method attached incorrectly' do
-          expect_offense(<<~RUBY)
-            object
-              .method_one.method_two
-                         ^^^^^^^^^^^ Method calls in a multiline chain must each be on their own line.
-              .method_three
-          RUBY
+        context 'and the method has no arguments' do
+          it 'registers an offense on the specific method attached incorrectly' do
+            expect_offense(<<~RUBY)
+              object
+                .method_one.method_two
+                           ^^^^^^^^^^^ Method calls in a multiline chain must each be on their own line.
+                .method_three
+            RUBY
 
-          expect_correction(<<~RUBY)
-            object
-              .method_one
-                .method_two
-              .method_three
-          RUBY
+            expect_correction(<<~RUBY)
+              object
+                .method_one
+                  .method_two
+                .method_three
+            RUBY
+          end
+        end
+
+        context 'but the method has arguments' do
+          it 'registers offense even if arguments are present' do
+            expect_offense(<<~RUBY)
+              params[:key]
+                .to_h
+                .symbolize_keys.merge(a: 1)
+                               ^^^^^^ Method calls in a multiline chain must each be on their own line.
+            RUBY
+
+            expect_correction(<<~RUBY)
+              params[:key]
+                .to_h
+                .symbolize_keys
+                  .merge(a: 1)
+            RUBY
+          end
         end
       end
 
