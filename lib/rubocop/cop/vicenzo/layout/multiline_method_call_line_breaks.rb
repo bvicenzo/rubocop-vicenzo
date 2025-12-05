@@ -91,9 +91,7 @@ module RuboCop
           end
 
           def valid_same_line_exception?(node, receiver)
-            arguments_cause_multiline?(node) ||
-              closed_parenthesis_multiline_receiver?(receiver) ||
-              operator_method?(node)
+            arguments_cause_multiline?(node) || operator_method?(node)
           end
 
           def operator_method?(node)
@@ -129,13 +127,6 @@ module RuboCop
             return false if node.receiver.loc.last_line != call_start_line(node)
 
             node.multiline?
-          end
-
-          def closed_parenthesis_multiline_receiver?(receiver)
-            return false unless receiver.multiline?
-            return false unless receiver.loc?(:end)
-
-            receiver.loc.end.is?(')')
           end
 
           def offense_range(node)

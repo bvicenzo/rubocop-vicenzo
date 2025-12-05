@@ -53,6 +53,26 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks, :co
         end
       end
 
+      context 'and an intermediate call has multiline arguments' do
+        it 'registers offense because the next method must be on its own line' do
+          expect_offense(<<~RUBY)
+            object.method_one(
+              arg1
+            ).method_two
+             ^^^^^^^^^^^ Method calls in a multiline chain must each be on their own line.
+          RUBY
+
+          # O Cop vai jogar o .method_two para a linha de baixo.
+          # A indentação será baseada na linha do fechamento do parênteses.
+          expect_correction(<<~RUBY)
+            object.method_one(
+              arg1
+            )
+              .method_two
+          RUBY
+        end
+      end
+
       context 'and the violation occurs inside a method definition' do
         it 'calculates indentation based on the receiver position' do
           expect_offense(<<~RUBY)
@@ -152,16 +172,6 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks, :co
               arg1,
               arg2
             )
-          RUBY
-        end
-      end
-
-      context 'but the break is inside arguments of an intermediate call' do
-        it 'does not register offense' do
-          expect_no_offenses(<<~RUBY)
-            object.method_one(
-              arg1
-            ).method_two
           RUBY
         end
       end
