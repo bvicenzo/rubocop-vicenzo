@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Add RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks;
+
 ## [0.2.0] - 2025-11-27
 
 - Remove RuboCop::Cop::Vicenzo::RSpec::MixedExampleGroups in favor of InconsistentSiblingStructure #10;
