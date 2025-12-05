@@ -130,6 +130,7 @@ module RuboCop
 
           def offense_range(node)
             return node.loc.selector unless node.loc.dot
+            return node.loc.dot unless node.loc.selector
 
             node.loc.dot.join(node.loc.selector)
           end
