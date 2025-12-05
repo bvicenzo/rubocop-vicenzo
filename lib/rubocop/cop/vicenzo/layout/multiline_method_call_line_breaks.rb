@@ -82,14 +82,14 @@ module RuboCop
 
           def check_violation(node, receiver)
             return unless same_line?(receiver, node)
-            return if valid_same_line_exception?(node, receiver)
+            return if valid_same_line_exception?(node)
 
             add_offense(offense_range(node)) do |corrector|
               break_line_before_dot(corrector, node, receiver)
             end
           end
 
-          def valid_same_line_exception?(node, receiver)
+          def valid_same_line_exception?(node)
             arguments_cause_multiline?(node) || operator_method?(node)
           end
 
