@@ -51,6 +51,8 @@ module RuboCop
           DEFAULT_INDENTATION_WIDTH = 2
           LEADING_SPACES_PATTERN = /\A */
 
+          OPERATOR_METHODS = %i[[] []= + - * / % ** << >>].freeze
+
           def on_send(node)
             check_node(node)
           end
@@ -79,6 +81,8 @@ module RuboCop
 
           def check_violation(node, receiver)
             return unless same_line?(receiver, node)
+
+            # Se for exceção válida (argumentos, parenteses OU OPERADOR), ignora.
             return if valid_same_line_exception?(node, receiver)
 
             add_offense(offense_range(node)) do |corrector|
@@ -87,7 +91,13 @@ module RuboCop
           end
 
           def valid_same_line_exception?(node, receiver)
-            arguments_cause_multiline?(node) || closed_parenthesis_multiline_receiver?(receiver)
+            arguments_cause_multiline?(node) ||
+              closed_parenthesis_multiline_receiver?(receiver) ||
+              operator_method?(node)
+          end
+
+          def operator_method?(node)
+            OPERATOR_METHODS.include?(node.method_name)
           end
 
           def part_of_larger_chain?(node)

@@ -72,6 +72,24 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks, :co
           RUBY
         end
       end
+
+      context 'and using array access or operators' do
+        it 'allows [] to remain on the same line as receiver in a multiline chain' do
+          expect_no_offenses(<<~RUBY)
+            params[:key]
+              .permit(:value)
+              .to_h
+          RUBY
+        end
+
+        it 'allows []= to remain on the same line' do
+          expect_no_offenses(<<~RUBY)
+            data[:key] = value
+              .to_s
+              .upcase
+          RUBY
+        end
+      end
     end
 
     context 'and configuration defines a custom indentation width' do
