@@ -32,7 +32,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks, :co
             expect_correction(<<~RUBY)
               object
                 .method_one
-                  .method_two
+                .method_two
                 .method_three
             RUBY
           end
@@ -51,7 +51,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks, :co
               params[:key]
                 .to_h
                 .symbolize_keys
-                  .merge(a: 1)
+                .merge(a: 1)
             RUBY
           end
         end

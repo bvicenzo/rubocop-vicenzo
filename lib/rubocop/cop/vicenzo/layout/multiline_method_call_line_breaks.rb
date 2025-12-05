@@ -50,6 +50,7 @@ module RuboCop
           MSG = 'Method calls in a multiline chain must each be on their own line.'
           DEFAULT_INDENTATION_WIDTH = 2
           LEADING_SPACES_PATTERN = /\A */
+          CHAIN_START_PATTERN = /\A\s*&?\./
 
           OPERATOR_METHODS = %i[[] []= + - * / % ** << >>].freeze
 
@@ -81,16 +82,14 @@ module RuboCop
 
           def check_violation(node, receiver)
             return unless same_line?(receiver, node)
-
-            # Se for exceção válida (argumentos, parenteses OU OPERADOR), ignora.
-            return if valid_same_line_exception?(node)
+            return if valid_same_line_exception?(node, receiver)
 
             add_offense(offense_range(node)) do |corrector|
               break_line_before_dot(corrector, node, receiver)
             end
           end
 
-          def valid_same_line_exception?(node)
+          def valid_same_line_exception?(node, receiver)
             arguments_cause_multiline?(node) || operator_method?(node)
           end
 
@@ -125,6 +124,7 @@ module RuboCop
           def arguments_cause_multiline?(node)
             return false if node.arguments.empty?
             return false if node.receiver.loc.last_line != call_start_line(node)
+
             return false if node.receiver.call_type? && node.receiver.loc.dot
 
             node.multiline?
@@ -146,7 +146,10 @@ module RuboCop
 
             current_indentation = last_line_source[LEADING_SPACES_PATTERN].length
 
-            indentation = ' ' * (current_indentation + indentation_width)
+            previous_line_is_chain = last_line_source.match?(CHAIN_START_PATTERN)
+            extra_indent = previous_line_is_chain ? 0 : indentation_width
+
+            indentation = ' ' * (current_indentation + extra_indent)
 
             corrector.insert_before(dot, "\n#{indentation}")
           end
