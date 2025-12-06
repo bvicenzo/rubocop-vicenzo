@@ -8,6 +8,10 @@ plugins:
 AllCops:
   NewCops: enable
 
+InternalAffairs/UndefinedConfig: # False positive because conflicts with Rubocop Layout namespace
+  Exclude:
+    - 'lib/rubocop/cop/vicenzo/layout/**/*'
+
 Naming/FileName:
   Exclude:
     - lib/rubocop-vicenzo.rb

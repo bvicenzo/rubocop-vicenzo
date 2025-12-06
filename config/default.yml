@@ -1,3 +1,10 @@
+Vicenzo/Layout/MultilineMethodCallLineBreaks:
+  Description: 'Enforces that method calls in a multiline chain must each be on their own line.'
+  Enabled: pending
+  Severity: convention
+  IndentationWidth: 2
+  VersionAdded: '<<next>>'
+
 Vicenzo/Rails/EnumInclusionOfValidation:
   Description: 'Check if the enum has the inclusion of validation defined.'
   Enabled: true
