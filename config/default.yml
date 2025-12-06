@@ -45,3 +45,8 @@ Vicenzo/RSpec/LeakyDefinition:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
+
+Vicenzo/Style/MultilineMethodCallParentheses:
+  Description: 'TODO: Write a description of the cop.'
+  Enabled: pending
+  VersionAdded: '<<next>>'
