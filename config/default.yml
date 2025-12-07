@@ -5,6 +5,13 @@ Vicenzo/Layout/MultilineMethodCallLineBreaks:
   IndentationWidth: 2
   VersionAdded: '<<next>>'
 
+Vicenzo/Layout/WrapMultilineArguments:
+  Description: 'Enforces line breaks and parentheses when arguments are multiline.'
+  Enabled: true
+  Severity: convention
+  IndentationWidth: 2
+  VersionAdded: '<<next>>'
+
 Vicenzo/Rails/EnumInclusionOfValidation:
   Description: 'Check if the enum has the inclusion of validation defined.'
   Enabled: true
@@ -49,4 +56,5 @@ Vicenzo/RSpec/LeakyDefinition:
 Vicenzo/Style/MultilineMethodCallParentheses:
   Description: 'Enforces parentheses for method calls with arguments that span multiple lines.'
   Enabled: true
+  Severity: convention
   VersionAdded: '<<next>>'

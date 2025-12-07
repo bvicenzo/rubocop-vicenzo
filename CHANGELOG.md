@@ -2,6 +2,7 @@
 
 - Add RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks #12;
 - Add RuboCop::Cop::Vicenzo::Style::MultilineMethodCallParentheses #13;
+- Add RuboCop::Cop::Vicenzo::Layout::WrapMultilineArguments;
 
 ## [0.2.0] - 2025-11-27
 
