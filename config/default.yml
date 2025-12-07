@@ -1,6 +1,6 @@
 Vicenzo/Layout/MultilineMethodCallLineBreaks:
   Description: 'Enforces that method calls in a multiline chain must each be on their own line.'
-  Enabled: pending
+  Enabled: true
   Severity: convention
   IndentationWidth: 2
   VersionAdded: '<<next>>'
@@ -47,6 +47,6 @@ Vicenzo/RSpec/LeakyDefinition:
     - '**/spec/factories/**/*'
 
 Vicenzo/Style/MultilineMethodCallParentheses:
-  Description: 'TODO: Write a description of the cop.'
-  Enabled: pending
+  Description: 'Enforces parentheses for method calls with arguments that span multiple lines.'
+  Enabled: true
   VersionAdded: '<<next>>'
