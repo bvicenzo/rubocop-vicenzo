@@ -1,7 +1,7 @@
 ## [Unreleased]
 
 - Add RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks #12;
-- Add RuboCop::Cop::Vicenzo::Style::MultilineMethodCallParentheses;
+- Add RuboCop::Cop::Vicenzo::Style::MultilineMethodCallParentheses #13;
 
 ## [0.2.0] - 2025-11-27
 
