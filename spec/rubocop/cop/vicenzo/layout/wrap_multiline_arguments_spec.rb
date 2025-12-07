@@ -139,5 +139,15 @@ RSpec.describe RuboCop::Cop::Vicenzo::Layout::WrapMultilineArguments, :config do
         RUBY
       end
     end
+
+    context 'and the method is a setter (assignment)' do
+      it 'does not register offense even with multiline value' do
+        expect_no_offenses(<<~RUBY)
+          spec.files = IO.popen(%w[git ls-files -z]) do |ls|
+            ls.readlines
+          end
+        RUBY
+      end
+    end
   end
 end

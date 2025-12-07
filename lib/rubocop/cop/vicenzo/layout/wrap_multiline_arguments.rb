@@ -65,7 +65,7 @@ module RuboCop
             return unless node.arguments?
             return unless node.multiline?
 
-            return if node.parenthesized? && node.first_argument.loc.line > call_line(node)
+            return if node.setter_method? || (node.parenthesized? && node.first_argument.loc.line > call_line(node))
 
             add_offense(node) do |corrector|
               autocorrect(corrector, node)
