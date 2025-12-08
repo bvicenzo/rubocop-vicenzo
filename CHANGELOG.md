@@ -2,6 +2,7 @@
 
 - Add RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks #12;
 - Add RuboCop::Cop::Vicenzo::Style::MultilineMethodCallParentheses #13;
+- Add `AllowedMethods` configuration to `Vicenzo/Style/MultilineMethodCallParentheses` to allow excluding specific methods (e.g., RSpec DSLs like `to` and `change`) from the rule.
 
 ## [0.2.0] - 2025-11-27
 

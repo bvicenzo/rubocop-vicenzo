@@ -38,22 +38,24 @@ module RuboCop
           def check_node(node)
             return unless node.arguments?
             return unless node.multiline?
-            return if node.parenthesized?
-
-            return if node.operator_method? || node.setter_method?
+            return if node.parenthesized? || node.operator_method? || node.setter_method? || allowed_method?(node)
 
             add_offense(node) do |corrector|
               autocorrect(corrector, node)
             end
           end
 
+          def allowed_method?(node)
+            allowed_methods.include?(node.method_name.to_s)
+          end
+
+          def allowed_methods
+            cop_config.fetch('AllowedMethods', [])
+          end
+
           def autocorrect(corrector, node)
             if node.loc.selector
-              gap_range = range_between(
-                node.loc.selector.end_pos,
-                node.first_argument.source_range.begin_pos
-              )
-
+              gap_range = range_between(node.loc.selector.end_pos, node.first_argument.source_range.begin_pos)
               corrector.replace(gap_range, '(')
             else
               corrector.insert_before(node.first_argument, '(')
