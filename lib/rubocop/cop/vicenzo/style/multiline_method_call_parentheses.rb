@@ -7,20 +7,28 @@ module RuboCop
         # Enforces parentheses for method calls with arguments that span multiple lines.
         # Single-line calls are ignored (parentheses are optional).
         #
+        # This cop accepts an `AllowedMethods` configuration to exempt specific methods
+        # from this rule. This is particularly useful for Fluent DSLs (like RSpec's
+        # `to`, `change`, etc.) where parentheses might hurt readability or conflict
+        # with layout rules.
+        #
         # @example
         #   # bad
         #   method_name arg1,
         #               arg2
         #
         #   # good
-        #   method_name(
-        #     arg1,
-        #     arg2
-        #   )
+        #   method_name(arg1,
+        #               arg2)
         #
-        #   # good (single line - optional)
+        #   # good (single line is always allowed)
         #   method_name arg1, arg2
-        #   method_name(arg1, arg2)
+        #
+        # @example AllowedMethods: ['to']
+        #   # good (allowed by configuration)
+        #   expect { action }.to change {
+        #     model.attribute
+        #   }
         #
         class MultilineMethodCallParentheses < Base
           extend RuboCop::Cop::AutoCorrector
