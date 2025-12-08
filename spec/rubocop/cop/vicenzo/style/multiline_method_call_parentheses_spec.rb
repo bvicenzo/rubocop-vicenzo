@@ -19,7 +19,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::Style::MultilineMethodCallParentheses, :co
       end
     end
 
-    context 'when the code follows style guidelines' do
+    context 'and the code follows style guidelines' do
       context 'and the call is single-line' do
         context 'and parentheses are omitted' do
           it 'does not register offense (optional style)' do
