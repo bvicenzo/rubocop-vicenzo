@@ -49,4 +49,5 @@ Vicenzo/RSpec/LeakyDefinition:
 Vicenzo/Style/MultilineMethodCallParentheses:
   Description: 'Enforces parentheses for method calls with arguments that span multiple lines.'
   Enabled: true
+  AllowedMethods: []
   VersionAdded: '<<next>>'
