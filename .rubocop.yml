@@ -8,6 +8,7 @@ plugins:
 AllCops:
   Exclude:
     - 'bin/**/*'
+    - 'vendor/**/*'
   NewCops: enable
 
 InternalAffairs/UndefinedConfig: # False positive because conflicts with Rubocop Layout namespace
