@@ -6,11 +6,19 @@ plugins:
   - rubocop-internal_affairs
 
 AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
   NewCops: enable
 
 InternalAffairs/UndefinedConfig: # False positive because conflicts with Rubocop Layout namespace
   Exclude:
     - 'lib/rubocop/cop/vicenzo/layout/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'rakelib/**/*'
+    - 'Rakefile'
 
 Naming/FileName:
   Exclude:
