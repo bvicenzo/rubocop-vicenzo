@@ -67,7 +67,7 @@ GEM
 
 PLATFORMS
   ruby
-  x86_64-darwin-23
+  x86_64-darwin
 
 DEPENDENCIES
   rake (~> 13.0)
@@ -78,4 +78,4 @@ DEPENDENCIES
   rubocop-vicenzo!
 
 BUNDLED WITH
-   2.6.2
+  4.0.3
