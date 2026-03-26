@@ -23,6 +23,12 @@ Vicenzo/RSpec/InconsistentSiblingStructure:
   Severity: warning
   VersionAdded: '0.2.0'
 
+Vicenzo/RSpec/IterationInsideExample:
+  Description: 'Do not call `expect` inside an iteration within an example.'
+  Enabled: true
+  Severity: warning
+  VersionAdded: '0.4.0'
+
 Vicenzo/RSpec/NestedContextImproperStart:
   Description: 'Check if the nested context does not start as a root one.'
   Enabled: true

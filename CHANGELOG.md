@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 - Add RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration;
+- Add RuboCop::Cop::Vicenzo::RSpec::IterationInsideExample;
 
 ## [0.3.0] - 2025-12-17
 

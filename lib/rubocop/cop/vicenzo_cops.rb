@@ -2,6 +2,7 @@
 
 require_relative 'vicenzo/rspec/dynamic_example_generation'
 require_relative 'vicenzo/rspec/inconsistent_sibling_structure'
+require_relative 'vicenzo/rspec/iteration_inside_example'
 require_relative 'vicenzo/rspec/nested_context_improper_start'
 require_relative 'vicenzo/rspec/nested_let_redefinition'
 require_relative 'vicenzo/rspec/nested_subject_redefinition'
