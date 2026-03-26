@@ -11,6 +11,17 @@ Vicenzo/Rails/EnumInclusionOfValidation:
   Severity: convention
   VersionAdded: '0.1.0'
 
+Vicenzo/RSpec/ConditionalInSpec:
+  Description: 'Do not use conditional logic in specs. Extract each branch into an explicit context instead.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '0.4.0'
+
 Vicenzo/RSpec/DynamicExampleGeneration:
   Description: 'Do not use iteration to dynamically generate example groups or examples.'
   Enabled: true

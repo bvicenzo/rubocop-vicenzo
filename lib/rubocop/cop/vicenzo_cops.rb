@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'vicenzo/rspec/conditional_in_spec'
 require_relative 'vicenzo/rspec/dynamic_example_generation'
 require_relative 'vicenzo/rspec/inconsistent_sibling_structure'
 require_relative 'vicenzo/rspec/iteration_inside_example'
