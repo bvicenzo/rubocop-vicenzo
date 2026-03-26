@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Add RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration;
+
 ## [0.3.0] - 2025-12-17
 
 - Add RuboCop::Cop::Vicenzo::Layout::MultilineMethodCallLineBreaks #12;

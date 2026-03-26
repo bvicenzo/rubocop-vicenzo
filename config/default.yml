@@ -11,6 +11,12 @@ Vicenzo/Rails/EnumInclusionOfValidation:
   Severity: convention
   VersionAdded: '0.1.0'
 
+Vicenzo/RSpec/DynamicExampleGeneration:
+  Description: 'Do not use iteration to dynamically generate example groups or examples.'
+  Enabled: true
+  Severity: warning
+  VersionAdded: '0.4.0'
+
 Vicenzo/RSpec/InconsistentSiblingStructure:
   Description: 'Enforces strict structural consistency (e.g. prevents mixing describe with context or examples with groups).'
   Enabled: true
