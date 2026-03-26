@@ -75,7 +75,7 @@ module RuboCop
           def contains_expectation?(node)
             return false unless node
 
-            node.each_node(:send).any? { |send_node| send_node.method_name == :expect }
+            node.each_node(:send).any? { |send_node| send_node.method?(:expect) }
           end
         end
       end
