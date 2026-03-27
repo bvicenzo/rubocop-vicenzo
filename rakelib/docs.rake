@@ -6,6 +6,14 @@ require 'fileutils'
 DOCS_PAGES_DIR = 'docs/modules/ROOT/pages'
 DOCS_NAV_FILE  = 'docs/modules/ROOT/nav.adoc'
 
+CAMEL_BOUNDARIES_UPPER_PATTERN  = /([A-Z]+)([A-Z][a-z])/
+CAMEL_BOUNDARIES_LOWER_PATTERN  = /([a-z\d])([A-Z])/
+CLASS_DECLARATION_PATTERN       = /^\s+class\s/
+COMMENT_LINE_PATTERN            = /^\s+#/
+EXAMPLE_TAG_PATTERN             = /^\s+#\s+@example(.*)/
+EXAMPLE_CODE_INDENT_PATTERN     = /^\s+#\s{0,3}/
+ANCHOR_INVALID_CHARS_PATTERN    = /[^a-z0-9-]/
+
 namespace :docs do
   desc 'Generate AsciiDoc documentation for all Vicenzo cops'
   task :generate do
@@ -66,8 +74,8 @@ end
 
 def underscore(str)
   str
-    .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-    .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+    .gsub(CAMEL_BOUNDARIES_UPPER_PATTERN, '\1_\2')
+    .gsub(CAMEL_BOUNDARIES_LOWER_PATTERN, '\1_\2')
     .downcase
 end
 
@@ -83,9 +91,9 @@ end
 def extract_docstring(source)
   lines = []
   source.each_line do |line|
-    break if /^\s+class\s/.match?(line)
+    break if CLASS_DECLARATION_PATTERN.match?(line)
 
-    lines << line if /^\s+#/.match?(line)
+    lines << line if COMMENT_LINE_PATTERN.match?(line)
   end
   lines
 end
@@ -100,11 +108,11 @@ def parse_examples(docstring_lines)
 end
 
 def update_examples(line, examples, current)
-  if line =~ /^\s+#\s+@example(.*)/
+  if line =~ EXAMPLE_TAG_PATTERN
     examples << current if current
     [examples, { title: Regexp.last_match(1).strip, code: [] }]
   elsif current
-    current[:code] << line.sub(/^\s+#\s{0,3}/, '').rstrip
+    current[:code] << line.sub(EXAMPLE_CODE_INDENT_PATTERN, '').rstrip
     [examples, current]
   else
     [examples, current]
@@ -203,7 +211,7 @@ def index_cops_table_lines(cop_data)
   lines = cop_data.sort_by { |cop| cop[:name] }.map do |cop|
     dept     = cop[:department]
     filename = "cops_#{dept.downcase}.adoc"
-    anchor   = cop[:name].downcase.tr('/', '-').gsub(/[^a-z0-9-]/, '')
+    anchor   = cop[:name].downcase.tr('/', '-').gsub(ANCHOR_INVALID_CHARS_PATTERN, '')
     "| xref:#{filename}##{anchor}[#{cop[:name]}] | #{dept} | #{cop[:version]}"
   end
   lines.push('|===', '')
