@@ -23,6 +23,7 @@ namespace :docs do
       puts "  Generated: #{filename} (#{cops.size} cop#{cops.size != 1 ? 's' : ''})"
     end
 
+    write_index(cop_data)
     write_nav(cops_by_dept)
     puts "\nDone. #{cop_data.size} cops documented across #{cops_by_dept.size} departments."
   end
@@ -167,6 +168,52 @@ def render_department_page(department, cops)
   end
 
   lines.join("\n")
+end
+
+def write_index(cop_data)
+  lines = []
+  lines << '= RuboCop Vicenzo'
+  lines << ':toc: left'
+  lines << ''
+  lines << 'Custom RuboCop cops for enforcing conventions adopted by Vicenzo projects.'
+  lines << ''
+  lines << '== Installation'
+  lines << ''
+  lines << "Add to your `Gemfile`:"
+  lines << ''
+  lines << '[source,ruby]'
+  lines << '----'
+  lines << "gem 'rubocop-vicenzo', require: false"
+  lines << '----'
+  lines << ''
+  lines << "Then add to your `.rubocop.yml`:"
+  lines << ''
+  lines << '[source,yaml]'
+  lines << '----'
+  lines << 'plugins:'
+  lines << '  - rubocop-vicenzo'
+  lines << '----'
+  lines << ''
+  lines << '== Cops'
+  lines << ''
+  lines << '[cols="2,1,1"]'
+  lines << '|==='
+  lines << '| Cop | Department | Version Added'
+  lines << ''
+
+  cop_data.sort_by { |c| c[:name] }.each do |cop|
+    dept     = cop[:department]
+    filename = "cops_#{dept.downcase}.adoc"
+    anchor   = cop[:name].downcase.gsub('/', '-').gsub(/[^a-z0-9-]/, '')
+    lines << "| xref:#{filename}##{anchor}[#{cop[:name]}] | #{dept} | #{cop[:version]}"
+  end
+
+  lines << '|==='
+  lines << ''
+
+  path = File.join(DOCS_PAGES_DIR, 'index.adoc')
+  File.write(path, lines.join("\n"))
+  puts '  Generated: index.adoc'
 end
 
 def write_nav(cops_by_dept)
