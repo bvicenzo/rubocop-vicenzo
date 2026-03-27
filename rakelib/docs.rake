@@ -6,8 +6,8 @@ require 'fileutils'
 DOCS_PAGES_DIR = 'docs/modules/ROOT/pages'
 DOCS_NAV_FILE  = 'docs/modules/ROOT/nav.adoc'
 
-CAMEL_BOUNDARIES_UPPER_PATTERN  = /([A-Z]+)([A-Z][a-z])/
-CAMEL_BOUNDARIES_LOWER_PATTERN  = /([a-z\d])([A-Z])/
+CAMEL_BOUNDARIES_UPPER_PATTERN  = /(?<leading_caps>[A-Z]+)(?<next_word>[A-Z][a-z])/
+CAMEL_BOUNDARIES_LOWER_PATTERN  = /(?<word_end>[a-z\d])(?<word_start>[A-Z])/
 CLASS_DECLARATION_PATTERN       = /^\s+class\s/
 COMMENT_LINE_PATTERN            = /^\s+#/
 EXAMPLE_TAG_PATTERN             = /^\s+#\s+@example(.*)/
@@ -74,8 +74,8 @@ end
 
 def underscore(str)
   str
-    .gsub(CAMEL_BOUNDARIES_UPPER_PATTERN, '\1_\2')
-    .gsub(CAMEL_BOUNDARIES_LOWER_PATTERN, '\1_\2')
+    .gsub(CAMEL_BOUNDARIES_UPPER_PATTERN, '\k<leading_caps>_\k<next_word>')
+    .gsub(CAMEL_BOUNDARIES_LOWER_PATTERN, '\k<word_end>_\k<word_start>')
     .downcase
 end
 
