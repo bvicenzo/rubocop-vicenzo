@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -25,7 +26,9 @@ jobs:
       - name: Check if version changed
         id: version_check
         run: |
-          if git diff HEAD^ HEAD --name-only | grep -q 'lib/rubocop/vicenzo/version.rb'; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          elif git diff HEAD^ HEAD --name-only | grep -q 'lib/rubocop/vicenzo/version.rb'; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
