@@ -14,10 +14,10 @@ namespace :docs do
     default_config = YAML.load_file('config/default.yml')
     cop_data = default_config.keys.map { |name| build_cop_data(name, default_config) }
 
-    cops_by_dept = cop_data.group_by { |c| c[:department] }
+    cops_by_dept = cop_data.group_by { |cop| cop[:department] }
 
     cops_by_dept.sort.each do |department, cops|
-      content  = render_department_page(department, cops.sort_by { |c| c[:name] })
+      content  = render_department_page(department, cops.sort_by { |cop| cop[:name] })
       filename = "cops_#{department.downcase}.adoc"
       File.write(File.join(DOCS_PAGES_DIR, filename), content)
       puts "  Generated: #{filename} (#{cops.size} cop#{'s' if cops.size != 1})"
@@ -113,7 +113,7 @@ end
 
 def finalize_examples(examples, current)
   examples << current if current
-  examples.each { |e| e[:code].pop while e[:code].last&.empty? }
+  examples.each { |example| example[:code].pop while example[:code].last&.empty? }
   examples
 end
 
@@ -141,7 +141,7 @@ def render_cop(cop)
 end
 
 def render_all_examples(examples)
-  examples.each_with_index.flat_map { |example, i| render_example(example, i) }
+  examples.each_with_index.flat_map { |example, index| render_example(example, index) }
 end
 
 def render_metadata_table(cop)
@@ -200,7 +200,7 @@ def rubocop_yml_installation_lines
 end
 
 def index_cops_table_lines(cop_data)
-  lines = cop_data.sort_by { |c| c[:name] }.map do |cop|
+  lines = cop_data.sort_by { |cop| cop[:name] }.map do |cop|
     dept     = cop[:department]
     filename = "cops_#{dept.downcase}.adoc"
     anchor   = cop[:name].downcase.tr('/', '-').gsub(/[^a-z0-9-]/, '')
