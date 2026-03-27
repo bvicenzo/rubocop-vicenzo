@@ -1,0 +1,40 @@
+= RuboCop Vicenzo
+:toc: left
+
+Custom RuboCop cops for enforcing conventions adopted by Vicenzo projects.
+
+== Installation
+
+Add to your `Gemfile`:
+
+[source,ruby]
+----
+gem 'rubocop-vicenzo', require: false
+----
+
+Then add to your `.rubocop.yml`:
+
+[source,yaml]
+----
+plugins:
+  - rubocop-vicenzo
+----
+
+== Cops
+
+[cols="2,1,1"]
+|===
+| Cop | Department | Version Added
+
+| xref:cops_layout.adoc#vicenzo-layout-multilinecalllinebreaks[Vicenzo/Layout/MultilineMethodCallLineBreaks] | Layout | 0.3.0
+| xref:cops_rails.adoc#vicenzo-rails-enuminclusionofvalidation[Vicenzo/Rails/EnumInclusionOfValidation] | Rails | 0.1.0
+| xref:cops_rspec.adoc#vicenzo-rspec-conditionalinspec[Vicenzo/RSpec/ConditionalInSpec] | RSpec | 0.4.0
+| xref:cops_rspec.adoc#vicenzo-rspec-dynamicexamplegeneration[Vicenzo/RSpec/DynamicExampleGeneration] | RSpec | 0.4.0
+| xref:cops_rspec.adoc#vicenzo-rspec-inconsistentsiblingstructure[Vicenzo/RSpec/InconsistentSiblingStructure] | RSpec | 0.2.0
+| xref:cops_rspec.adoc#vicenzo-rspec-iterationinsideexample[Vicenzo/RSpec/IterationInsideExample] | RSpec | 0.4.0
+| xref:cops_rspec.adoc#vicenzo-rspec-leakydefinition[Vicenzo/RSpec/LeakyDefinition] | RSpec | 0.2.0
+| xref:cops_rspec.adoc#vicenzo-rspec-nestedcontextimproperstart[Vicenzo/RSpec/NestedContextImproperStart] | RSpec | 0.1.0
+| xref:cops_rspec.adoc#vicenzo-rspec-nestedletredefinition[Vicenzo/RSpec/NestedLetRedefinition] | RSpec | 0.1.0
+| xref:cops_rspec.adoc#vicenzo-rspec-nestedsubjectredefinition[Vicenzo/RSpec/NestedSubjectRedefinition] | RSpec | 0.1.0
+| xref:cops_style.adoc#vicenzo-style-multilinecallparentheses[Vicenzo/Style/MultilineMethodCallParentheses] | Style | 0.3.0
+|===

@@ -1,0 +1,5 @@
+name: rubocop-vicenzo
+version: ~
+title: RuboCop Vicenzo
+nav:
+  - modules/ROOT/nav.adoc

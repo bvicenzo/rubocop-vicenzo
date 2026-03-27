@@ -12,3 +12,10 @@
 
 # rspec failure tracking
 .rspec_status
+
+# Antora generated site
+/build/
+
+# Generated cop documentation (rebuilt via `rake docs:generate`)
+/docs/modules/ROOT/pages/cops_*.adoc
+/docs/modules/ROOT/nav.adoc
