@@ -2,6 +2,8 @@
 
 [![Ruby](https://github.com/bvicenzo/rubocop-vicenzo/actions/workflows/main.yml/badge.svg)](https://github.com/bvicenzo/rubocop-vicenzo/actions/workflows/main.yml)
 
+📖 **[Documentation](https://bvicenzo.github.io/rubocop-vicenzo)**
+
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
