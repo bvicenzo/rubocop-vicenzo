@@ -221,7 +221,7 @@ def write_nav(cops_by_dept)
   lines = ['* xref:index.adoc[Home]', '* Cops']
   cops_by_dept
     .sort
-    .each { |department, _| lines << "** xref:cops_#{department.downcase}.adoc[#{department}]" }
+    .each { |department, _cops| lines << "** xref:cops_#{department.downcase}.adoc[#{department}]" }
   File.write(DOCS_NAV_FILE, "#{lines.join("\n")}\n")
   puts '  Generated: nav.adoc'
 end
