@@ -2,9 +2,9 @@
 
 ## [0.4.0] - 2026-03-28
 
-- Add RuboCop::Cop::Vicenzo::RSpec::ConditionalInSpec;
-- Add RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration;
-- Add RuboCop::Cop::Vicenzo::RSpec::IterationInsideExample;
+- Add RuboCop::Cop::Vicenzo::RSpec::ConditionalInSpec #19;
+- Add RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration #19;
+- Add RuboCop::Cop::Vicenzo::RSpec::IterationInsideExample #19;
 
 ## [0.3.0] - 2025-12-17
 
