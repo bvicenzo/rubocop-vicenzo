@@ -7,27 +7,20 @@ module RuboCop
         # Ensures that enums using the new syntax include the
         # `validate: { allow_nil: true }` option.
         #
-        # ## Bad usage
+        # Old-style enums (keyword argument syntax) are ignored.
         #
-        # ```ruby
-        # enum :status, { active: 1, inactive: 0 }, suffix: true
-        # ```
+        # @example
+        #   # bad — missing validate option
+        #   enum :status, { active: 1, inactive: 0 }, suffix: true
         #
-        # ```ruby
-        # enum :status, { active: 1, inactive: 0 }, validate: true, suffix: true
-        # ```
+        #   # bad — validate option present but incorrect
+        #   enum :status, { active: 1, inactive: 0 }, validate: true, suffix: true
         #
-        # ## Good usage
+        #   # good
+        #   enum :status, { active: 1, inactive: 0 }, validate: { allow_nil: true }, suffix: true
         #
-        # ```ruby
-        # enum :status, { active: 1, inactive: 0 }, validate: { allow_nil: true }, suffix: true
-        # ```
-        #
-        # This cop does not enforce validation on enums using the old syntax:
-        #
-        # ```ruby
-        # enum status: { active: 1, inactive: 0 }
-        # ```
+        #   # ignored — old-style enum syntax
+        #   enum status: { active: 1, inactive: 0 }
         class EnumInclusionOfValidation < Base
           extend AutoCorrector
 

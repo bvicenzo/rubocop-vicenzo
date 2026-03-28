@@ -1,0 +1,15 @@
+site:
+  title: RuboCop Vicenzo
+  url: https://bvicenzo.github.io/rubocop-vicenzo
+
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      start_path: docs
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./docs/supplemental-ui

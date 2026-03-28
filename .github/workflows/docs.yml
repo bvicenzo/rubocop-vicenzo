@@ -1,0 +1,75 @@
+name: Deploy Docs
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Check if version changed
+        id: version_check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          elif git diff HEAD^ HEAD --name-only | grep -q 'lib/rubocop/vicenzo/version.rb'; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Ruby
+        if: steps.version_check.outputs.changed == 'true'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0.1'
+          bundler-cache: true
+
+      - name: Generate AsciiDoc pages
+        if: steps.version_check.outputs.changed == 'true'
+        run: bundle exec rake docs:generate
+
+      - name: Set up Node.js
+        if: steps.version_check.outputs.changed == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Install Antora
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm install -g @antora/cli @antora/site-generator
+
+      - name: Build site
+        if: steps.version_check.outputs.changed == 'true'
+        run: antora antora-playbook.yml
+
+      - name: Configure GitHub Pages
+        if: steps.version_check.outputs.changed == 'true'
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        if: steps.version_check.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: build/site
+
+      - name: Deploy to GitHub Pages
+        if: steps.version_check.outputs.changed == 'true'
+        id: deploy
+        uses: actions/deploy-pages@v4
