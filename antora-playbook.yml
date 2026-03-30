@@ -1,6 +1,7 @@
 site:
   title: RuboCop Vicenzo
   url: https://bvicenzo.github.io/rubocop-vicenzo
+  start_page: rubocop-vicenzo::index.adoc
 
 content:
   sources:
