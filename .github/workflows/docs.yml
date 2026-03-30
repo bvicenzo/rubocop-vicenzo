@@ -49,7 +49,7 @@ jobs:
         if: steps.version_check.outputs.changed == 'true'
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install Antora
         if: steps.version_check.outputs.changed == 'true'
@@ -72,4 +72,4 @@ jobs:
       - name: Deploy to GitHub Pages
         if: steps.version_check.outputs.changed == 'true'
         id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
