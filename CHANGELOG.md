@@ -1,6 +1,8 @@
 ## [Unreleased]
 
-- Add RuboCop::Cop::Vicenzo::Style::JsonParseSymbolizeNames;
+## [0.5.0] - 2026-06-29
+
+- Add RuboCop::Cop::Vicenzo::Style::JsonParseSymbolizeNames #23;
 
 ## [0.4.0] - 2026-03-28
 
