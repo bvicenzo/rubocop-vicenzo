@@ -73,7 +73,7 @@ Vicenzo/Style/JsonParseSymbolizeNames:
   Description: 'Enforces passing `symbolize_names: true` to `JSON.parse` so keys are symbols.'
   Enabled: true
   Severity: convention
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.5.0'
 
 Vicenzo/Style/MultilineMethodCallParentheses:
   Description: 'Enforces parentheses for method calls with arguments that span multiple lines.'
