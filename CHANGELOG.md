@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Add RuboCop::Cop::Vicenzo::Style::JsonParseSymbolizeNames;
+
 ## [0.4.0] - 2026-03-28
 
 - Add RuboCop::Cop::Vicenzo::RSpec::ConditionalInSpec #19;
