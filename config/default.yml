@@ -31,7 +31,7 @@ Vicenzo/RSpec/DerivedPremises:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.6.0'
 
 Vicenzo/RSpec/DynamicExampleGeneration:
   Description: 'Do not use iteration to dynamically generate example groups or examples.'
@@ -60,7 +60,7 @@ Vicenzo/RSpec/MutatedPremises:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.6.0'
 
 Vicenzo/RSpec/NestedContextImproperStart:
   Description: 'Check if the nested context does not start as a root one.'
