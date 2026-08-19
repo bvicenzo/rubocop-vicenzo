@@ -1,0 +1,58 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Persist the release token so the fill-step `git push` below runs as a
+          # real user — a push made with GITHUB_TOKEN would not re-trigger CI.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+      - id: release
+        uses: googleapis/release-please-action@v5
+        with:
+          # A user token (not GITHUB_TOKEN) so the release PR is opened by a real
+          # user and its CI runs without the `action_required` approval gate.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      # While a release PR is open, replace the `<<next>>` VersionAdded
+      # placeholders (injected by `rake new_cop`) with the version being
+      # released. release-please recreates the branch on every run, so this
+      # step is idempotent and re-applies the replacement each time.
+      - name: Fill VersionAdded placeholders on the release PR
+        if: ${{ steps.release.outputs.pr }}
+        env:
+          RELEASE_PR: ${{ steps.release.outputs.pr }}
+        run: |
+          set -euo pipefail
+          branch="$(printf '%s' "$RELEASE_PR" | jq -r '.headBranchName')"
+          if [ -z "$branch" ] || [ "$branch" = "null" ]; then
+            echo "No release PR branch; nothing to do."
+            exit 0
+          fi
+          git fetch origin "$branch"
+          git checkout "$branch"
+          if grep -q '<<next>>' config/default.yml; then
+            version="$(sed -nE "s/.*VERSION = '([^']+)'.*/\1/p" lib/rubocop/vicenzo/version.rb)"
+            sed -i "s/<<next>>/${version}/g" config/default.yml
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "chore: set VersionAdded to ${version} for new cops"
+            git push origin "$branch"
+            echo "Filled <<next>> with ${version}."
+          else
+            echo "No <<next>> placeholders to fill."
+          fi

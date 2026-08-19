@@ -1,0 +1,36 @@
+name: Publish gem
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write # rubygems/release-gem may push the tag; ours already exists
+  id-token: write # required for RubyGems Trusted Publishing (OIDC)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      # A leftover placeholder would ship a gem whose config/default.yml — and
+      # therefore the published documentation — says `<<next>>` instead of a version.
+      - name: Guard against unresolved VersionAdded placeholders
+        run: |
+          if grep -q '<<next>>' config/default.yml; then
+            echo "::error::config/default.yml still contains <<next>> placeholders."
+            exit 1
+          fi
+
+      # Runs `bundle exec rake release`. The Bundler tag step is a no-op here
+      # (`unless already_tagged?`) because release-please already created the tag,
+      # so only the RubyGems push actually happens.
+      - uses: rubygems/release-gem@v1
