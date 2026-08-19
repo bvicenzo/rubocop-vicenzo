@@ -14,7 +14,7 @@ module RuboCop
         # @example
         #   # bad
         #
-        #   [:admin, :driver].each do |role|
+        #   [:admin, :editor].each do |role|
         #     context "when role is #{role}" do
         #       it 'does something' do
         #         ...
@@ -32,8 +32,8 @@ module RuboCop
         #     end
         #   end
         #
-        #   context 'when role is driver' do
-        #     let(:role) { :driver }
+        #   context 'when role is editor' do
+        #     let(:role) { :editor }
         #
         #     it 'does something' do
         #       ...

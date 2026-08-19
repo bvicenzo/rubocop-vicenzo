@@ -16,27 +16,27 @@ module RuboCop
         # @example
         #   # bad — expect is called inside the iteration
         #
-        #   it 'returns vehicle costs general values' do
-        #     response_body[:vehicle_costs].first.each do |attribute, value|
-        #       expect(value).to eq(vehicle_cost.send(attribute).to_s)
+        #   it 'returns product prices general values' do
+        #     response_body[:product_prices].first.each do |attribute, value|
+        #       expect(value).to eq(product_price.send(attribute).to_s)
         #     end
         #   end
         #
         #   # good — iteration builds data, expect is called once outside
         #
         #   it 'returns the expected column names' do
-        #     columns = VehicleCost.column_names.map { |column| column.gsub('_centavos', '') }
-        #     expect(response_body[:vehicle_costs].first.keys).to match_array(columns.map(&:to_sym))
+        #     columns = ProductPrice.column_names.map { |column| column.gsub('_cents', '') }
+        #     expect(response_body[:product_prices].first.keys).to match_array(columns.map(&:to_sym))
         #   end
         #
         #   # good — each attribute has an explicit example
         #
         #   it 'returns the correct name' do
-        #     expect(response_body[:vehicle_costs].first[:name]).to eq(vehicle_cost.name)
+        #     expect(response_body[:product_prices].first[:name]).to eq(product_price.name)
         #   end
         #
         #   it 'returns the correct value' do
-        #     expect(response_body[:vehicle_costs].first[:value]).to eq(vehicle_cost.value.to_s)
+        #     expect(response_body[:product_prices].first[:value]).to eq(product_price.value.to_s)
         #   end
         class IterationInsideExample < RuboCop::Cop::RSpec::Base
           MSG = 'Do not call `expect` inside an iteration. ' \
