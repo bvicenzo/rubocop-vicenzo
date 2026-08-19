@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.5.0...v0.6.0) (2026-08-19)
+
+
+### Features
+
+* add RSpec cops against mutated and derived premises ([#26](https://github.com/bvicenzo/rubocop-vicenzo/issues/26)) ([b138dd0](https://github.com/bvicenzo/rubocop-vicenzo/commit/b138dd00a76e1bcd62e95c1f2c51dca5b4232319))
+
 ## [0.5.0] - 2026-06-29
 
 - Add RuboCop::Cop::Vicenzo::Style::JsonParseSymbolizeNames #23;
