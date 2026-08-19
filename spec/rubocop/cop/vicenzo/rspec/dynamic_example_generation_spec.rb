@@ -4,7 +4,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
   context 'when iteration generates context blocks' do
     it 'registers an offense on the iteration call' do
       expect_offense(<<~RUBY)
-        [:admin, :driver].each do |role|
+        [:admin, :editor].each do |role|
         ^^^^^^^^^^^^^^^^^^^^^^ Do not use iteration to dynamically generate example groups or examples. Write explicit, static contexts instead.
           context "when role is \#{role}" do
             it 'does something' do
@@ -52,7 +52,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
   context 'when each_with_index is used to generate contexts' do
     it 'registers an offense on the iteration call' do
       expect_offense(<<~RUBY)
-        [:admin, :driver].each_with_index do |role, index|
+        [:admin, :editor].each_with_index do |role, index|
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Do not use iteration to dynamically generate example groups or examples. Write explicit, static contexts instead.
           context "case \#{index}" do
             it 'does something' do
@@ -66,7 +66,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
   context 'when map is used to generate contexts' do
     it 'registers an offense on the iteration call' do
       expect_offense(<<~RUBY)
-        [:admin, :driver].map do |role|
+        [:admin, :editor].map do |role|
         ^^^^^^^^^^^^^^^^^^^^^ Do not use iteration to dynamically generate example groups or examples. Write explicit, static contexts instead.
           context "when role is \#{role}" do
             it 'does something' do
@@ -81,7 +81,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         def setup_roles
-          [:admin, :driver].each do |role|
+          [:admin, :editor].each do |role|
             create(:user, role: role)
           end
         end
@@ -93,7 +93,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         it 'processes all roles' do
-          [:admin, :driver].each do |role|
+          [:admin, :editor].each do |role|
             expect(role).to be_a(Symbol)
           end
         end
@@ -105,7 +105,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         before do
-          [:admin, :driver].each do |role|
+          [:admin, :editor].each do |role|
             create(:user, role: role)
           end
         end
@@ -117,7 +117,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::DynamicExampleGeneration, :rspec_co
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         let(:users) do
-          [:admin, :driver].map do |role|
+          [:admin, :editor].map do |role|
             create(:user, role: role)
           end
         end

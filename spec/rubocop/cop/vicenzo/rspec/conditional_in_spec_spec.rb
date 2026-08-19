@@ -69,9 +69,9 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::ConditionalInSpec, :rspec_config do
   context 'when if is used at the example group level' do
     it 'registers an offense on the if keyword' do
       expect_offense(<<~RUBY)
-        if created_by == :whatsapp_driver
+        if created_by == :api_client
         ^^ Do not use conditional logic in specs. Extract each branch into an explicit context instead.
-          it 'has exclusive whatsapp driver behaviour' do
+          it 'has exclusive api client behaviour' do
           end
         end
       RUBY

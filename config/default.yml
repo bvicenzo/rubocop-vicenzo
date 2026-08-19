@@ -22,6 +22,17 @@ Vicenzo/RSpec/ConditionalInSpec:
     - '**/spec/factories/**/*'
   VersionAdded: '0.4.0'
 
+Vicenzo/RSpec/DerivedPremises:
+  Description: 'Do not derive a premise from another premise; declare the complete value where it is needed.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/RSpec/DynamicExampleGeneration:
   Description: 'Do not use iteration to dynamically generate example groups or examples.'
   Enabled: true
@@ -39,6 +50,17 @@ Vicenzo/RSpec/IterationInsideExample:
   Enabled: true
   Severity: warning
   VersionAdded: '0.4.0'
+
+Vicenzo/RSpec/MutatedPremises:
+  Description: 'Do not mutate the premises (let, let_it_be, subject) an example starts from.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
 
 Vicenzo/RSpec/NestedContextImproperStart:
   Description: 'Check if the nested context does not start as a root one.'

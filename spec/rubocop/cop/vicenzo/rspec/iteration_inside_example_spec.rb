@@ -44,7 +44,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::IterationInsideExample, :rspec_conf
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         it 'returns the expected column names' do
-          columns = VehicleCost.column_names.map { |column| column.gsub('_centavos', '') }
+          columns = ProductPrice.column_names.map { |column| column.gsub('_cents', '') }
           expect(response.first.keys).to match_array(columns.map(&:to_sym))
         end
       RUBY
@@ -66,7 +66,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::IterationInsideExample, :rspec_conf
   context 'when iteration is used at example group level (outside an example)' do
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
-        [:admin, :driver].each do |role|
+        [:admin, :editor].each do |role|
           context "when role is \#{role}" do
             it 'does something' do
             end
