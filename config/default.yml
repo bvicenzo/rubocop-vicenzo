@@ -91,6 +91,18 @@ Vicenzo/RSpec/LeakyDefinition:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
 
+Vicenzo/RSpec/SubjectIsMethodResult:
+  Description: 'The subject of an example group describing a method must be the object under test, not the method result.'
+  Enabled: true
+  Severity: convention
+  AllowedMethods: []
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/Style/JsonParseSymbolizeNames:
   Description: 'Enforces passing `symbolize_names: true` to `JSON.parse` so keys are symbols.'
   Enabled: true
