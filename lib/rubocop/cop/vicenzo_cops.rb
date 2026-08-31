@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
+require_relative 'vicenzo/rspec/competing_subjects'
 require_relative 'vicenzo/rspec/conditional_in_spec'
 require_relative 'vicenzo/rspec/derived_premises'
 require_relative 'vicenzo/rspec/dynamic_example_generation'
 require_relative 'vicenzo/rspec/inconsistent_sibling_structure'
 require_relative 'vicenzo/rspec/iteration_inside_example'
+require_relative 'vicenzo/rspec/let_is_method_result'
 require_relative 'vicenzo/rspec/mutated_premises'
 require_relative 'vicenzo/rspec/nested_context_improper_start'
 require_relative 'vicenzo/rspec/nested_let_redefinition'
 require_relative 'vicenzo/rspec/nested_subject_redefinition'
 require_relative 'vicenzo/rspec/leaky_definition'
+require_relative 'vicenzo/rspec/subject_defined_as_let'
 require_relative 'vicenzo/rspec/subject_is_method_result'
 require_relative 'vicenzo/rails/enum_inclusion_of_validation'
 require_relative 'vicenzo/layout/multiline_method_call_line_breaks'

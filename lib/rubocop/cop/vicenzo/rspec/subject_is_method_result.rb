@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'mixin/described_method'
+
 module RuboCop
   module Cop
     module Vicenzo
@@ -58,13 +60,10 @@ module RuboCop
         #     subject(:result) { described_class.(object: Ball.new) }
         #   end
         class SubjectIsMethodResult < RuboCop::Cop::RSpec::Base
+          include DescribedMethod
+
           MSG = 'Subject holds what `%<method>s` returned, not the object under test. ' \
                 'Make the subject the object that receives `%<method>s`, and call it inside the example.'
-
-          # `#catch`, `.catch`, and the form carrying a signature such as `#catch(object:)`.
-          PREFIXED_METHOD_DESCRIPTION = /\A[#.](?<name>.+?)(?:\(.*\))?\z/
-          # `catch` - a description that is nothing but a method name.
-          BARE_METHOD_DESCRIPTION = /\A(?<name>\w+[?!=]?)\z/
 
           def on_block(node)
             return unless subject?(node)
@@ -72,7 +71,7 @@ module RuboCop
             method_name = described_method_name(node)
             return if method_name.nil? || allowed_methods.include?(method_name)
 
-            invocation = invocation_of(node.body, method_name)
+            invocation = call_in_chain(node.body) { |call| call.method?(method_name) }
             return unless invocation
 
             add_offense(invocation, message: format(MSG, method: method_name))
@@ -80,55 +79,6 @@ module RuboCop
 
           alias on_numblock on_block
           alias on_itblock on_block
-
-          private
-
-          def allowed_methods
-            cop_config.fetch('AllowedMethods', [])
-          end
-
-          # The nearest enclosing example group naming a method: a subject sitting in a `context`
-          # still answers to the `describe '#method'` wrapping it.
-          def described_method_name(node)
-            node
-              .each_ancestor(:any_block)
-              .lazy
-              .filter_map { |ancestor| method_name_from(ancestor) if example_group?(ancestor) }
-              .first
-          end
-
-          def method_name_from(node)
-            description = node.send_node.first_argument
-            return unless description.respond_to?(:str_type?) && description.str_type?
-
-            match = PREFIXED_METHOD_DESCRIPTION.match(description.value) ||
-                    BARE_METHOD_DESCRIPTION.match(description.value)
-
-            match&.[](:name)
-          end
-
-          # Only the expression the subject returns, walked down its receiver chain, counts:
-          # `Cat.new(name: 'Bixano').catch(ball)` is the result of `catch`, while
-          # `Cat.new(catches: other.catch)` is still a cat.
-          def invocation_of(body, method_name)
-            node = returned_expression(body)
-
-            while node
-              node = node.send_node if node.any_block_type?
-              break unless node.type?(:call)
-              return node if node.method?(method_name)
-
-              node = node.receiver
-            end
-
-            nil
-          end
-
-          def returned_expression(body)
-            return if body.nil?
-
-            body.begin_type? ? body.children.last : body
-          end
         end
       end
     end

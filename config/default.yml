@@ -11,6 +11,18 @@ Vicenzo/Rails/EnumInclusionOfValidation:
   Severity: convention
   VersionAdded: '0.1.0'
 
+Vicenzo/RSpec/CompetingSubjects:
+  Description: 'Definitions the expectations assert on, two or more in a group declaring no subject, are either hidden contexts or a premise that belongs in a before.'
+  Enabled: true
+  Severity: convention
+  AllowedMethods: []
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/RSpec/ConditionalInSpec:
   Description: 'Do not use conditional logic in specs. Extract each branch into an explicit context instead.'
   Enabled: true
@@ -90,6 +102,30 @@ Vicenzo/RSpec/LeakyDefinition:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
+
+Vicenzo/RSpec/LetIsMethodResult:
+  Description: 'A let under an example group describing a method must not hold the result of calling that method on the subject.'
+  Enabled: true
+  Severity: convention
+  AllowedMethods: []
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
+Vicenzo/RSpec/SubjectDefinedAsLet:
+  Description: 'A let the expectations assert on, in a group declaring no subject, must be declared as the subject.'
+  Enabled: true
+  Severity: convention
+  AllowedMethods: []
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
 
 Vicenzo/RSpec/SubjectIsMethodResult:
   Description: 'The subject of an example group describing a method must be the object under test, not the method result.'
