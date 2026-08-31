@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.6.0...v0.7.0) (2026-08-31)
+
+
+### Features
+
+* add RSpec cops against subjects hidden in lets ([#30](https://github.com/bvicenzo/rubocop-vicenzo/issues/30)) ([9daf259](https://github.com/bvicenzo/rubocop-vicenzo/commit/9daf25972252fdfdb92a51bba9cfe70e63446d17))
+* add Vicenzo/RSpec/SubjectIsMethodResult cop ([#28](https://github.com/bvicenzo/rubocop-vicenzo/issues/28)) ([b69245a](https://github.com/bvicenzo/rubocop-vicenzo/commit/b69245af973f3341bbe62bca628333c5acb909d7))
+
 ## [0.6.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.5.0...v0.6.0) (2026-08-19)
 
 
