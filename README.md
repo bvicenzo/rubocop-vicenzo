@@ -11,7 +11,7 @@ Add it to the `development`/`test` group of your `Gemfile`:
 <!-- x-release-please-start-version -->
 ```ruby
 group :development, :test do
-  gem 'rubocop-vicenzo', '~> 0.6.0', require: false
+  gem 'rubocop-vicenzo', '~> 0.7.0', require: false
 end
 ```
 <!-- x-release-please-end-version -->
