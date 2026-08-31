@@ -21,7 +21,7 @@ Vicenzo/RSpec/CompetingSubjects:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.7.0'
 
 Vicenzo/RSpec/ConditionalInSpec:
   Description: 'Do not use conditional logic in specs. Extract each branch into an explicit context instead.'
@@ -113,7 +113,7 @@ Vicenzo/RSpec/LetIsMethodResult:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.7.0'
 
 Vicenzo/RSpec/SubjectDefinedAsLet:
   Description: 'A let the expectations assert on, in a group declaring no subject, must be declared as the subject.'
@@ -125,7 +125,7 @@ Vicenzo/RSpec/SubjectDefinedAsLet:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.7.0'
 
 Vicenzo/RSpec/SubjectIsMethodResult:
   Description: 'The subject of an example group describing a method must be the object under test, not the method result.'
@@ -137,7 +137,7 @@ Vicenzo/RSpec/SubjectIsMethodResult:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.7.0'
 
 Vicenzo/Style/JsonParseSymbolizeNames:
   Description: 'Enforces passing `symbolize_names: true` to `JSON.parse` so keys are symbols.'
