@@ -148,7 +148,7 @@ Vicenzo/RSpec/TopLevelContext:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.8.0'
 
 Vicenzo/RSpec/TopLevelExample:
   Description: 'An example must not be declared in the top-level example group, which names no behaviour.'
@@ -159,7 +159,7 @@ Vicenzo/RSpec/TopLevelExample:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.8.0'
 
 Vicenzo/RSpec/TopLevelHook:
   Description: 'A hook must not be declared in the top-level example group, where it runs for every example in the file.'
@@ -170,7 +170,7 @@ Vicenzo/RSpec/TopLevelHook:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.8.0'
 
 Vicenzo/RSpec/TopLevelLet:
   Description: 'A let must not be declared in the top-level example group, where it reaches every example in the file.'
@@ -181,7 +181,7 @@ Vicenzo/RSpec/TopLevelLet:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.8.0'
 
 Vicenzo/RSpec/TopLevelSubject:
   Description: 'A subject must not be declared in the top-level example group, where it reaches every example in the file.'
@@ -192,7 +192,7 @@ Vicenzo/RSpec/TopLevelSubject:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.8.0'
 
 Vicenzo/Style/JsonParseSymbolizeNames:
   Description: 'Enforces passing `symbolize_names: true` to `JSON.parse` so keys are symbols.'

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.7.0...v0.8.0) (2026-09-09)
+
+
+### Features
+
+* add RSpec cops against top-level declarations ([#31](https://github.com/bvicenzo/rubocop-vicenzo/issues/31)) ([ef5e207](https://github.com/bvicenzo/rubocop-vicenzo/commit/ef5e20728c0c4bc94dbb5eec54a48ff5197d1b25))
+
 ## [0.7.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.6.0...v0.7.0) (2026-08-31)
 
 
