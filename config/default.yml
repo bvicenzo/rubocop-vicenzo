@@ -139,6 +139,61 @@ Vicenzo/RSpec/SubjectIsMethodResult:
     - '**/spec/factories/**/*'
   VersionAdded: '0.7.0'
 
+Vicenzo/RSpec/TopLevelContext:
+  Description: 'A context must not be declared in the top-level example group, where it is a scenario for every example in the file.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
+Vicenzo/RSpec/TopLevelExample:
+  Description: 'An example must not be declared in the top-level example group, which names no behaviour.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
+Vicenzo/RSpec/TopLevelHook:
+  Description: 'A hook must not be declared in the top-level example group, where it runs for every example in the file.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
+Vicenzo/RSpec/TopLevelLet:
+  Description: 'A let must not be declared in the top-level example group, where it reaches every example in the file.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
+Vicenzo/RSpec/TopLevelSubject:
+  Description: 'A subject must not be declared in the top-level example group, where it reaches every example in the file.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/Style/JsonParseSymbolizeNames:
   Description: 'Enforces passing `symbolize_names: true` to `JSON.parse` so keys are symbols.'
   Enabled: true
