@@ -94,7 +94,7 @@ module RuboCop
           def check_subject(subject_node, subject_definitions)
             name = name_for(subject_node)
 
-            if subject_definitions.key?(name)
+            if subject_definitions.has_key?(name)
               add_offense(subject_node, message: redefined_subject_message(name, subject_definitions))
               subject_definitions[name] += [line_location(subject_node)]
             else

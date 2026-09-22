@@ -76,8 +76,19 @@ module RuboCop
                             'trait/transient, or declare the final state in the context that needs it.'
 
           PERSISTENCE_METHODS = %i[
-            update update! update_attribute update_column update_columns save save! destroy destroy! touch
-            increment! decrement! toggle!
+            update
+            update!
+            update_attribute
+            update_column
+            update_columns
+            save
+            save!
+            destroy
+            destroy!
+            touch
+            increment!
+            decrement!
+            toggle!
           ].freeze
 
           COLLECTION_METHODS = %i[<< push concat unshift store merge! deep_merge! clear delete].freeze

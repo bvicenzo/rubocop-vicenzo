@@ -1,0 +1,228 @@
+plugins:
+  - rubocop-vicenzo
+  - rubocop-rspec
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - '.git/**/*'
+    - 'db/**/*'
+
+##### LAYOUT #####
+
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/CaseIndentation:
+  Enabled: true
+  EnforcedStyle: end
+
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 120
+  # (\A|\s)   -> Start of line or whitespace
+  # #         -> The hash character
+  # (?!\{)    -> Negative lookahead: NOT followed by `{` (prevents matching interpolation)
+  AllowedPatterns: ['(\A|\s)#(?!\{)']
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+##### STYLE #####
+
+Style/PreferredHashMethods:
+  Enabled: true
+  Safe: false
+  EnforcedStyle: verbose
+
+Style/SymbolArray:
+  Enabled: true
+  EnforcedStyle: percent
+  MinSize: 3
+
+Style/WordArray:
+  Enabled: true
+  EnforcedStyle: percent
+  MinSize: 3
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: true
+  EnforcedStyle: literal
+
+Style/LambdaCall:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+##### LINT #####
+
+Lint/MissingSuper:
+  Enabled: false
+
+##### NAMING #####
+
+Naming/InclusiveLanguage:
+  Enabled: false
+
+Naming/PredicatePrefix:
+  ForbiddenPrefixes:
+    - is_
+    - have_
+    # allows `has_` predicate
+
+# A single letter says nothing about what was rescued.
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
+  PreferredName: error
+
+# Vicenzo/Naming/ShortName covers local variables. Block parameters are the core
+# cop's job, but it ships with MinNameLength: 1 and therefore never fires — raise
+# it so both halves of the rule agree.
+Naming/BlockParameterName:
+  MinNameLength: 3
+
+###### METRICS #####
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 22
+
+Metrics/BlockLength:
+  Enabled: true
+  CountComments: false
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+    - method_call
+  AllowedMethods:
+    - 'describe'
+    - 'context'
+    - 'it'
+    - 'let'
+    - 'subject'
+    - 'namespace'
+    - 'task'
+    - 'configure'
+  Exclude:
+    - '**/*.gemspec'
+    - 'Rakefile'
+    - 'rakelib/**/*'
+    - 'spec/**/*'
+
+Metrics/ClassLength:
+  Enabled: true
+  Max: 200
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+    - method_call
+
+Metrics/MethodLength:
+  Enabled: true
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+    - method_call
+  Max: 20
+
+Metrics/ModuleLength:
+  Enabled: true
+  Max: 200
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+    - method_call
+
+##### RSPEC #####
+
+RSpec/ContextWording:
+  Prefixes:
+    - and
+    - but
+    - when
+    - with
+    - without
+
+RSpec/ExampleLength:
+  Max: 20
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+    - method_call
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/PredicateMatcher:
+  Strict: false
+
+##### VICENZO #####
+
+Vicenzo/Style/MultilineMethodCallParentheses:
+  AllowedMethods:
+    - to
+    - not_to
+    - to_not

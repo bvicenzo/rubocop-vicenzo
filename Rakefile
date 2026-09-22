@@ -4,8 +4,8 @@ require 'bundler/setup'
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = '--format progress'
+RSpec::Core::RakeTask.new(:spec) do |rspec_task|
+  rspec_task.rspec_opts = '--format progress'
 end
 
 require 'rubocop/rake_task'
