@@ -155,16 +155,26 @@ end
 def render_metadata_table(cop)
   enabled     = cop[:enabled] ? 'Enabled' : 'Disabled'
   autocorrect = cop[:autocorrect] ? 'Yes' : 'No'
-  ['[cols="1,1,1,1"]', '|===', '| Enabled by default | Safe | Supports autocorrection | Version Added',
-   '', "| #{enabled}", '| Yes', "| #{autocorrect}", "| #{cop[:version]}", '|===', '']
+  [
+    '[cols="1,1,1,1"]',
+    '|===',
+    '| Enabled by default | Safe | Supports autocorrection | Version Added',
+    '',
+    "| #{enabled}",
+    '| Yes',
+    "| #{autocorrect}",
+    "| #{cop[:version]}",
+    '|===',
+    ''
+  ]
 end
 
 def render_example(example, index)
   title = if example[:title].empty?
-            index.zero? ? 'Example' : "Example #{index + 1}"
-          else
-            example[:title]
-          end
+    index.zero? ? 'Example' : "Example #{index + 1}"
+  else
+    example[:title]
+  end
   ["=== #{title}", '', '[source,ruby]', '----', *example[:code], '----', '']
 end
 
@@ -198,13 +208,28 @@ def installation_section_lines
 end
 
 def gemfile_installation_lines
-  ['Add to your `Gemfile`:', '', '[source,ruby]', '----',
-   "gem 'rubocop-vicenzo', require: false", '----', '']
+  [
+    'Add to your `Gemfile`:',
+    '',
+    '[source,ruby]',
+    '----',
+    "gem 'rubocop-vicenzo', require: false",
+    '----',
+    ''
+  ]
 end
 
 def rubocop_yml_installation_lines
-  ['Then add to your `.rubocop.yml`:', '', '[source,yaml]', '----',
-   'plugins:', '  - rubocop-vicenzo', '----', '']
+  [
+    'Then add to your `.rubocop.yml`:',
+    '',
+    '[source,yaml]',
+    '----',
+    'plugins:',
+    '  - rubocop-vicenzo',
+    '----',
+    ''
+  ]
 end
 
 def index_cops_table_lines(cop_data)

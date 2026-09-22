@@ -46,10 +46,25 @@ module RuboCop
           ENUMERATION_METHODS = %i[each each_with_index each_with_object map flat_map].freeze
 
           EXAMPLE_GROUP_DSL = %i[
-            context describe feature experiment
-            it specify example scenario focus
-            let let! subject subject! before after around
-            shared_examples shared_context shared_examples_for
+            context
+            describe
+            feature
+            experiment
+            it
+            specify
+            example
+            scenario
+            focus
+            let
+            let!
+            subject
+            subject!
+            before
+            after
+            around
+            shared_examples
+            shared_context
+            shared_examples_for
           ].freeze
 
           # @!method enumeration_block?(node)
