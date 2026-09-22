@@ -5,6 +5,12 @@ Vicenzo/Layout/MultilineMethodCallLineBreaks:
   IndentationWidth: 2
   VersionAdded: '0.3.0'
 
+Vicenzo/Naming/AnonymousUnusedName:
+  Description: 'An unused declaration must not be anonymous; name it after what it stands for.'
+  Enabled: true
+  Severity: convention
+  VersionAdded: '<<next>>'
+
 Vicenzo/Rails/EnumInclusionOfValidation:
   Description: 'Check if the enum has the inclusion of validation defined.'
   Enabled: true
