@@ -11,6 +11,13 @@ Vicenzo/Naming/AnonymousUnusedName:
   Severity: convention
   VersionAdded: '<<next>>'
 
+Vicenzo/Naming/ShortName:
+  Description: 'A name too short to carry meaning; spell out whole words from the domain.'
+  Enabled: true
+  Severity: convention
+  MinNameLength: 3
+  VersionAdded: '<<next>>'
+
 Vicenzo/Rails/EnumInclusionOfValidation:
   Description: 'Check if the enum has the inclusion of validation defined.'
   Enabled: true

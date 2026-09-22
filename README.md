@@ -64,6 +64,31 @@ cops together with the standard cops.
 rubocop --plugin rubocop-vicenzo
 ```
 
+## Opinionated style guide
+
+Loading the plugin gives you the `Vicenzo/*` cops and nothing else: their defaults
+live in `config/default.yml` and are applied automatically.
+
+The gem also ships `config/style.yml`, an opinionated configuration of the cops the
+`Vicenzo/*` ones build on — line length, multiline layout, metrics, and the naming
+rules that back `Vicenzo/Naming/ShortName` (notably `Naming/BlockParameterName`,
+which RuboCop ships with `MinNameLength: 1` and which therefore never fires). It is
+**opt-in**:
+
+```yaml
+inherit_gem:
+  rubocop-vicenzo: config/style.yml
+```
+
+That single line brings the configuration **and** the plugins it builds on
+(`rubocop-rspec` and this gem's own cops), so there is no `plugins:` key left for you
+to write.
+
+> [!NOTE]
+> `AllCops: CacheRootDirectory` is not inheritable. RuboCop reads it from the
+> top-level config file before resolving `inherit_from`/`inherit_gem`, so it has to
+> stay in your own `.rubocop.yml`.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
