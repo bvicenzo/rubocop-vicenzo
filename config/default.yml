@@ -9,14 +9,14 @@ Vicenzo/Naming/AnonymousUnusedName:
   Description: 'An unused declaration must not be anonymous; name it after what it stands for.'
   Enabled: true
   Severity: convention
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.9.0'
 
 Vicenzo/Naming/ShortName:
   Description: 'A name too short to carry meaning; spell out whole words from the domain.'
   Enabled: true
   Severity: convention
   MinNameLength: 3
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.9.0'
 
 Vicenzo/Rails/EnumInclusionOfValidation:
   Description: 'Check if the enum has the inclusion of validation defined.'
@@ -67,7 +67,7 @@ Vicenzo/RSpec/DescribeInsideContext:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.9.0'
 
 Vicenzo/RSpec/DynamicExampleGeneration:
   Description: 'Do not use iteration to dynamically generate example groups or examples.'
@@ -231,7 +231,7 @@ Vicenzo/RSpec/UnnestedContextImproperStart:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.9.0'
 
 Vicenzo/Style/JsonParseSymbolizeNames:
   Description: 'Enforces passing `symbolize_names: true` to `JSON.parse` so keys are symbols.'
