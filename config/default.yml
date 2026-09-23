@@ -58,6 +58,17 @@ Vicenzo/RSpec/DerivedPremises:
     - '**/spec/factories/**/*'
   VersionAdded: '0.6.0'
 
+Vicenzo/RSpec/DescribeInsideContext:
+  Description: 'A describe must not be nested in a context, which is a scenario of the behaviour a describe names.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/RSpec/DynamicExampleGeneration:
   Description: 'Do not use iteration to dynamically generate example groups or examples.'
   Enabled: true
