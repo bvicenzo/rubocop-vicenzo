@@ -15,6 +15,10 @@ module RuboCop
         # The closest example group decides. A shared group is left alone, since the scenario it continues
         # lives where it is included.
         #
+        # The words that continue a scenario come from `ForbiddenPrefixes`, compared against the first word
+        # of the description, ignoring case. Setting it replaces the defaults; to add words to them, declare
+        # `inherit_mode: { merge: [ForbiddenPrefixes] }` for the cop.
+        #
         # @example
         #   # bad
         #   describe '#available_colors' do
@@ -29,11 +33,19 @@ module RuboCop
         #       it 'does not show the pink option'
         #     end
         #   end
+        #
+        # @example ForbiddenPrefixes: ['and', 'but', 'however', 'also']
+        #   # bad
+        #   describe '#available_colors' do
+        #     context 'also when the color pink is not available' do
+        #       it 'does not show the pink option'
+        #     end
+        #   end
         class UnnestedContextImproperStart < RuboCop::Cop::RSpec::Base
-          MSG = 'Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.'
+          MSG = 'Unnested `context` should start with `when`, `with`, or `without`, not `%<prefix>s`.'
 
           CONTEXTS = %i[context fcontext xcontext].freeze
-          FORBIDDEN_PREFIXES = %w[and but however].freeze
+          DEFAULT_FORBIDDEN_PREFIXES = %w[and but however].freeze
 
           # @!method context_definition?(node)
           def_node_matcher :context_definition?, <<~PATTERN
@@ -44,7 +56,9 @@ module RuboCop
             return unless context_definition?(node)
             return if continues_a_scenario?(node)
 
-            add_offense(node.send_node) if starts_with_conjunction?(node)
+            prefix = first_word(node)
+
+            add_offense(node.send_node, message: format(MSG, prefix:)) if forbidden_prefixes.include?(prefix)
           end
 
           alias on_numblock on_block
@@ -59,12 +73,14 @@ module RuboCop
             parent && (shared_group?(parent) || context_definition?(parent))
           end
 
-          def starts_with_conjunction?(node)
+          def first_word(node)
             description = node.send_node.first_argument
 
-            return false unless description&.str_type?
+            description.value.lstrip[/\A[[:alpha:]]+/]&.downcase if description&.str_type?
+          end
 
-            FORBIDDEN_PREFIXES.include?(description.value.lstrip[/\A[[:alpha:]]+/]&.downcase)
+          def forbidden_prefixes
+            cop_config.fetch('ForbiddenPrefixes', DEFAULT_FORBIDDEN_PREFIXES).map(&:downcase)
           end
         end
       end

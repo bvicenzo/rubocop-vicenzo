@@ -211,6 +211,10 @@ Vicenzo/RSpec/UnnestedContextImproperStart:
   Description: 'Check if a context with no parent scenario starts with a conjunction.'
   Enabled: true
   Severity: convention
+  ForbiddenPrefixes:
+    - and
+    - but
+    - however
   Include:
     - '**/spec/**/*_spec.rb'
   Exclude:

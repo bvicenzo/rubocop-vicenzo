@@ -7,7 +7,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
         expect_offense(<<~RUBY)
           describe '#available_colors' do
             context 'and the color pink is not available' do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`.
               it 'does not show the pink option'
             end
           end
@@ -20,7 +20,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
         expect_offense(<<~RUBY)
           describe '#available_colors' do
             context 'but the color pink is not available' do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `but`.
               it 'does not show the pink option'
             end
           end
@@ -33,7 +33,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
         expect_offense(<<~RUBY)
           describe '#available_colors' do
             context 'however, the color pink is not available' do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `however`.
               it 'does not show the pink option'
             end
           end
@@ -46,7 +46,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
         expect_offense(<<~RUBY)
           RSpec.describe Product do
             context 'and the color pink is not available' do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`.
               it 'does not show the pink option'
             end
           end
@@ -59,7 +59,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
         expect_offense(<<~RUBY)
           describe '#available_colors' do
             fcontext 'and the color pink is not available' do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`.
               it 'does not show the pink option'
             end
           end
@@ -73,7 +73,7 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
           context 'when the product is for sale' do
             describe '#available_colors' do
               context 'and the color pink is not available' do
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`, `but`, or `however`.
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `and`.
                 it 'does not show the pink option'
               end
             end
@@ -165,6 +165,37 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
             end
           end
         RUBY
+      end
+    end
+  end
+
+  describe 'configuration' do
+    context 'when ForbiddenPrefixes replaces the defaults' do
+      let(:cop_config) { { 'ForbiddenPrefixes' => %w[Also] } }
+
+      context 'and the context starts with a configured word' do
+        it 'registers an offense' do
+          expect_offense(<<~RUBY)
+            describe '#available_colors' do
+              context 'also when the color pink is not available' do
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `also`.
+                it 'does not show the pink option'
+              end
+            end
+          RUBY
+        end
+      end
+
+      context 'but the context starts with a default word left out of the configuration' do
+        it 'does not register an offense' do
+          expect_no_offenses(<<~RUBY)
+            describe '#available_colors' do
+              context 'and the color pink is not available' do
+                it 'does not show the pink option'
+              end
+            end
+          RUBY
+        end
       end
     end
   end
