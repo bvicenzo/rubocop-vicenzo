@@ -3,6 +3,7 @@
 require_relative 'vicenzo/rspec/competing_subjects'
 require_relative 'vicenzo/rspec/conditional_in_spec'
 require_relative 'vicenzo/rspec/derived_premises'
+require_relative 'vicenzo/rspec/describe_inside_context'
 require_relative 'vicenzo/rspec/dynamic_example_generation'
 require_relative 'vicenzo/rspec/inconsistent_sibling_structure'
 require_relative 'vicenzo/rspec/iteration_inside_example'
