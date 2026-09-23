@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.9.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.8.0...v0.9.0) (2026-09-23)
+
+
+### Features
+
+* add Vicenzo/Naming/AnonymousUnusedName cop ([#33](https://github.com/bvicenzo/rubocop-vicenzo/issues/33)) ([fabbad6](https://github.com/bvicenzo/rubocop-vicenzo/commit/fabbad655dac0c362924dd0aaf245abd2c7023e1))
+* add Vicenzo/Naming/ShortName cop and an opinionated config/style.yml ([#35](https://github.com/bvicenzo/rubocop-vicenzo/issues/35)) ([1b67f46](https://github.com/bvicenzo/rubocop-vicenzo/commit/1b67f4643b4348f5768a8fbb3b88cea35046e5e2))
+* add Vicenzo/RSpec/DescribeInsideContext cop ([#37](https://github.com/bvicenzo/rubocop-vicenzo/issues/37)) ([3f3d6ae](https://github.com/bvicenzo/rubocop-vicenzo/commit/3f3d6aeb95d087e32594e8ded3d1ce0e3715dee7))
+* add Vicenzo/RSpec/UnnestedContextImproperStart cop ([#36](https://github.com/bvicenzo/rubocop-vicenzo/issues/36)) ([0a8fb0f](https://github.com/bvicenzo/rubocop-vicenzo/commit/0a8fb0fec62370ac331b9a3275b95a0b22998b1d))
+
 ## [0.8.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.7.0...v0.8.0) (2026-09-09)
 
 
