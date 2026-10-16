@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.9.0...v0.10.0) (2026-10-16)
+
+
+### Features
+
+* add Vicenzo/Style/PreferManyOverSizeComparison cop ([#38](https://github.com/bvicenzo/rubocop-vicenzo/issues/38)) ([910ea02](https://github.com/bvicenzo/rubocop-vicenzo/commit/910ea026f7e4c46f9de27db580e6330cf845bfe7))
+
 ## [0.9.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.8.0...v0.9.0) (2026-09-23)
 
 
