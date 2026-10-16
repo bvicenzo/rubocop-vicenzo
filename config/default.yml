@@ -244,3 +244,10 @@ Vicenzo/Style/MultilineMethodCallParentheses:
   Enabled: true
   AllowedMethods: []
   VersionAdded: '0.3.0'
+
+Vicenzo/Style/PreferManyOverSizeComparison:
+  Description: 'Use many? instead of comparing size or length with one.'
+  Enabled: true
+  Severity: convention
+  SafeAutoCorrect: false
+  VersionAdded: '<<next>>'
