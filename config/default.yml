@@ -250,4 +250,4 @@ Vicenzo/Style/PreferManyOverSizeComparison:
   Enabled: true
   Severity: convention
   SafeAutoCorrect: false
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.10.0'
