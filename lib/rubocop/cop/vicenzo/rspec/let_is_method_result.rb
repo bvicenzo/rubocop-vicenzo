@@ -2,6 +2,7 @@
 
 require_relative 'mixin/described_method'
 require_relative 'mixin/premise_tracking'
+require_relative 'mixin/subject_reference'
 
 module RuboCop
   module Cop
@@ -21,8 +22,10 @@ module RuboCop
         #
         # Only calls on the subject count, which is what separates the result from the setup: a `let`
         # calling the described method on some other object is building a premise, not the outcome the
-        # example is about. `AllowedMethods` is shared with the sibling cop and ships empty, for the
-        # layers whose convention is a single entry point.
+        # example is about. A `let` that only renames the subject is `Vicenzo/RSpec/LetAliasingSubject`'s
+        # to report; once it is gone, the call goes through the subject's own name and is reported here.
+        # `AllowedMethods` is shared with the sibling cop and ships empty, for the layers whose convention
+        # is a single entry point.
         #
         # @example
         #   # bad - the expectation asserts on a name; the cat never catches anything in the example
@@ -51,6 +54,7 @@ module RuboCop
         class LetIsMethodResult < RuboCop::Cop::RSpec::Base
           include DescribedMethod
           include PremiseTracking
+          include SubjectReference
 
           MSG = 'Let `:%<name>s` holds what `%<method>s` returned. Undo it and call `%<method>s` on the ' \
                 'subject inside the expectation.'
@@ -82,33 +86,6 @@ module RuboCop
             end
 
             call
-          end
-
-          # `subject` always refers to the subject, declared or implicit; a named one answers to its name
-          # as well.
-          def subject_names(node)
-            names = Set[:subject]
-
-            node.each_ancestor(:any_block).each do |ancestor|
-              next unless example_group?(ancestor)
-
-              each_child_block(ancestor) { |child| names << subject_name(child) if subject?(child) }
-            end
-
-            names
-          end
-
-          # An anonymous `subject!` is still read as `subject`.
-          def subject_name(node)
-            name = premise_name(node).to_sym
-
-            name == :subject! ? :subject : name
-          end
-
-          def subject_reference?(receiver, names)
-            return false unless receiver.send_type? && receiver.receiver.nil? && receiver.arguments.empty?
-
-            names.include?(receiver.method_name)
           end
         end
       end
