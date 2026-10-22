@@ -268,17 +268,178 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::SubjectIsMethodResult, :rspec_confi
       end
     end
 
-    context 'when AllowedMethods lists the described method' do
-      let(:cop_config) { { 'AllowedMethods' => %w[call] } }
+    context 'when AllowedMethods lists only other methods' do
+      let(:cop_config) { { 'AllowedMethods' => %w[perform] } }
+      let(:call_offense) do
+        'Subject holds what `call` returned, not the object under test. ' \
+          'Make the subject the object that receives `call`, and call it inside the example.'
+      end
 
-      it 'does not register an offense' do
-        expect_no_offenses(<<~RUBY)
+      it 'registers an offense on the invocation, saying the subject holds what the method returned' do
+        expect_offense(<<~RUBY)
           RSpec.describe Cat do
             describe '.call' do
               subject(:result) { described_class.(object: ball) }
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{call_offense}
             end
           end
         RUBY
+      end
+    end
+
+    context 'when AllowedMethods lists the described method' do
+      let(:cop_config) { { 'AllowedMethods' => %w[call] } }
+
+      context 'and the subject reaches the allowed call only through an argument' do
+        it 'does not register an offense' do
+          expect_no_offenses(<<~RUBY)
+            RSpec.describe Cat do
+              describe '.call' do
+                subject(:cat) { Cat.new(result: described_class.(object: ball)) }
+              end
+            end
+          RUBY
+        end
+      end
+
+      context 'and the allowed call is the returned expression itself' do
+        context 'and the subject body is a single statement' do
+          context 'and the call takes no block' do
+            it 'does not register an offense' do
+              expect_no_offenses(<<~RUBY)
+                RSpec.describe Cat do
+                  describe '.call' do
+                    subject(:result) { described_class.(object: ball) }
+                  end
+                end
+              RUBY
+            end
+          end
+
+          context 'and the call takes a block' do
+            it 'does not register an offense' do
+              expect_no_offenses(<<~RUBY)
+                RSpec.describe Cat do
+                  describe '.call' do
+                    subject(:result) { described_class.(object: ball) { |cat| cat.purr } }
+                  end
+                end
+              RUBY
+            end
+          end
+        end
+
+        context 'and the subject body has several statements' do
+          it 'does not register an offense' do
+            expect_no_offenses(<<~RUBY)
+              RSpec.describe Cat do
+                describe '.call' do
+                  subject(:result) do
+                    ball.inflate
+                    described_class.(object: ball)
+                  end
+                end
+              end
+            RUBY
+          end
+        end
+      end
+
+      context 'but something is chained after the allowed call' do
+        context 'and the subject body is a single statement' do
+          context 'and it is a method call' do
+            let(:derived_offense) do
+              'Subject derives from what `call` returned. ' \
+                'Keep the subject as the result of `call`, and derive from it inside the example.'
+            end
+
+            it 'registers an offense on the whole expression, saying the subject derives from the result' do
+              expect_offense(<<~RUBY)
+                RSpec.describe Cat do
+                  describe '.call' do
+                    subject(:ids) { described_class.().map(&:id) }
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{derived_offense}
+                  end
+                end
+              RUBY
+            end
+          end
+
+          context 'and it is a safe-navigation call' do
+            let(:derived_offense) do
+              'Subject derives from what `call` returned. ' \
+                'Keep the subject as the result of `call`, and derive from it inside the example.'
+            end
+
+            it 'registers an offense on the whole expression, saying the subject derives from the result' do
+              expect_offense(<<~RUBY)
+                RSpec.describe Cat do
+                  describe '.call' do
+                    subject(:value) { described_class.(object: ball)&.value }
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{derived_offense}
+                  end
+                end
+              RUBY
+            end
+          end
+
+          context 'and it is a call with a block' do
+            let(:derived_offense) do
+              'Subject derives from what `call` returned. ' \
+                'Keep the subject as the result of `call`, and derive from it inside the example.'
+            end
+
+            it 'registers an offense on the whole expression, saying the subject derives from the result' do
+              expect_offense(<<~RUBY)
+                RSpec.describe Cat do
+                  describe '.call' do
+                    subject(:overviews) { described_class.().map { |row| [row.resource_type, row.status] } }
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{derived_offense}
+                  end
+                end
+              RUBY
+            end
+          end
+
+          context 'and it calls the result again' do
+            let(:derived_offense) do
+              'Subject derives from what `call` returned. ' \
+                'Keep the subject as the result of `call`, and derive from it inside the example.'
+            end
+
+            it 'registers an offense on the whole expression, saying the subject derives from the result' do
+              expect_offense(<<~RUBY)
+                RSpec.describe Cat do
+                  describe '.call' do
+                    subject(:purr) { described_class.(object: ball).() }
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{derived_offense}
+                  end
+                end
+              RUBY
+            end
+          end
+        end
+
+        context 'and the subject body has several statements' do
+          let(:derived_offense) do
+            'Subject derives from what `call` returned. ' \
+              'Keep the subject as the result of `call`, and derive from it inside the example.'
+          end
+
+          it 'registers an offense on the last statement, saying the subject derives from the result' do
+            expect_offense(<<~RUBY)
+              RSpec.describe Cat do
+                describe '.call' do
+                  subject(:value) do
+                    ball.inflate
+                    described_class.(object: ball).value
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{derived_offense}
+                  end
+                end
+              end
+            RUBY
+          end
+        end
       end
     end
   end

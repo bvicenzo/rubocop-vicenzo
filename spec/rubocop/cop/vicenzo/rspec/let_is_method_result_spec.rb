@@ -56,6 +56,45 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LetIsMethodResult, :rspec_config do
       end
     end
 
+    context 'when the let calls the described method on a local variable holding the subject' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              subject(:cat) { Cat.new }
+
+              let(:catch) do
+                hunter = cat
+                hunter.catch(ball)
+                ^^^^^^^^^^^^^^^^^^ #{catch_offense}
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on the subject wrapped in parentheses' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              subject(:cat) { Cat.new }
+
+              let(:catch) { (cat).catch(ball) }
+                            ^^^^^^^^^^^^^^^^^ #{catch_offense}
+            end
+          end
+        RUBY
+      end
+    end
+
     context 'when the let derives a value from the call' do
       it 'registers an offense' do
         catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
@@ -176,6 +215,51 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LetIsMethodResult, :rspec_config do
               subject(:cat) { Cat.new }
 
               let(:taken_ball) { other_cat.catch(ball) }
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on a local variable holding another object' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              subject(:cat) { Cat.new }
+
+              let(:taken_ball) do
+                hunter = other_cat
+                hunter.catch(ball)
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on an object it builds' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              subject(:cat) { Cat.new }
+
+              let(:taken_ball) { Cat.new.catch(ball) }
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on a constant' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              subject(:cat) { Cat.new }
+
+              let(:taken_ball) { Cat.catch(ball) }
             end
           end
         RUBY

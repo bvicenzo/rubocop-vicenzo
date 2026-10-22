@@ -24,7 +24,11 @@ module RuboCop
         # (a service object always invoked through `call`, for instance). `AllowedMethods` exists
         # for those and ships empty: the convention belongs to the project that adopts it, not to
         # this gem. Declaring it there - or excluding a whole directory through the standard
-        # `Exclude` - keeps the exemption visible and reviewable in `.rubocop.yml`.
+        # `Exclude` - keeps the exemption visible and reviewable in `.rubocop.yml`. The exemption
+        # covers the result itself, not what is derived from it: a subject that chains anything
+        # after the allowed call - a projection such as `map`, or unwrapping a monad through
+        # `value` - is still reported, since it drops the data the examples end up calling the
+        # method again to reach.
         #
         # An inline disable directive is not that: it is an exemption nobody reviewed. Dropping
         # the `#` from the description is not either - the cop reads bare descriptions too, and the
@@ -59,26 +63,54 @@ module RuboCop
         #   describe '.call' do
         #     subject(:result) { described_class.(object: Ball.new) }
         #   end
+        #
+        #   # bad - the subject is derived from the result, not the result itself
+        #   describe '.call' do
+        #     subject(:ids) { described_class.().map(&:id) }
+        #   end
+        #
+        #   # bad - unwrapping the monad keeps only a part of the result
+        #   describe '.call' do
+        #     subject(:value) { described_class.(object: Ball.new).value }
+        #   end
         class SubjectIsMethodResult < RuboCop::Cop::RSpec::Base
           include DescribedMethod
 
           MSG = 'Subject holds what `%<method>s` returned, not the object under test. ' \
                 'Make the subject the object that receives `%<method>s`, and call it inside the example.'
+          DERIVED_MSG = 'Subject derives from what `%<method>s` returned. ' \
+                        'Keep the subject as the result of `%<method>s`, and derive from it inside the example.'
 
           def on_block(node)
             return unless subject?(node)
 
             method_name = described_method_name(node)
-            return if method_name.nil? || allowed_methods.include?(method_name)
+            return if method_name.nil?
 
-            invocation = call_in_chain(node.body) { |call| call.method?(method_name) }
-            return unless invocation
+            chain = ReturnedChain.new(node.body)
+            invocations = chain.select { |call| call.method?(method_name) }
+            return if invocations.empty?
 
-            add_offense(invocation, message: format(MSG, method: method_name))
+            if allowed_methods.include?(method_name)
+              check_derivation(chain, invocations.last, method_name)
+            else
+              add_offense(invocations.first, message: format(MSG, method: method_name))
+            end
           end
 
           alias on_numblock on_block
           alias on_itblock on_block
+
+          private
+
+          # An allowed method may be the subject only as the returned expression itself: its innermost
+          # invocation has to be the outermost call of the chain. A block handed to it still belongs to the
+          # call; anything chained after it - calling the result again included - does not.
+          def check_derivation(chain, innermost_invocation, method_name)
+            return if chain.first.equal?(innermost_invocation)
+
+            add_offense(chain.expression, message: format(DERIVED_MSG, method: method_name))
+          end
         end
       end
     end
