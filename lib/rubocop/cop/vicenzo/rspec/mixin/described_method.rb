@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../returned_chain'
+
 module RuboCop
   module Cop
     module Vicenzo
@@ -42,27 +44,11 @@ module RuboCop
             cop_config.fetch('AllowedMethods', [])
           end
 
-          # Walks the expression a definition returns down its receiver chain, yielding each call, so that
-          # `Cat.new.catch(ball).to_s` is seen as built on `catch` while `Cat.new(catches: other.catch)`
-          # is not - there, nothing of `catch` reaches the value.
-          def call_in_chain(body)
-            node = returned_expression(body)
-
-            while node
-              node = node.send_node if node.any_block_type?
-              break unless node.type?(:call)
-              return node if yield(node)
-
-              node = node.receiver
-            end
-
-            nil
-          end
-
-          def returned_expression(body)
-            return if body.nil?
-
-            body.begin_type? ? body.children.last : body
+          # The first call the value of a definition is built on that satisfies the block, seen from the outside in:
+          # `Cat.new.catch(ball).to_s` is built on `catch` while `Cat.new(catches: other.catch)` is not - there,
+          # nothing of `catch` reaches the value. See `ReturnedChain`.
+          def call_in_chain(body, &)
+            ReturnedChain.new(body).find(&)
           end
         end
       end

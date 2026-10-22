@@ -72,12 +72,16 @@ module RuboCop
 
           private
 
+          # The receiver is read from the chain itself, the call right after the invocation, so that a subject
+          # passed along through a local variable or parentheses is still the subject.
           def invocation_on_subject(node, method_name)
             names = subject_names(node)
 
-            call_in_chain(node.body) do |call|
-              call.method?(method_name) && subject_reference?(call.receiver, names)
+            call, = ReturnedChain.new(node.body).each_cons(2).find do |invocation, receiver|
+              invocation.method?(method_name) && subject_reference?(receiver, names)
             end
+
+            call
           end
 
           # `subject` always refers to the subject, declared or implicit; a named one answers to its name
@@ -102,7 +106,7 @@ module RuboCop
           end
 
           def subject_reference?(receiver, names)
-            return false unless receiver&.send_type? && receiver.receiver.nil? && receiver.arguments.empty?
+            return false unless receiver.send_type? && receiver.receiver.nil? && receiver.arguments.empty?
 
             names.include?(receiver.method_name)
           end
