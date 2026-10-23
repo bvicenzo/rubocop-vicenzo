@@ -127,6 +127,17 @@ Vicenzo/RSpec/LeakyDefinition:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
 
+Vicenzo/RSpec/LetAliasingSubject:
+  Description: 'A let must not hold the subject itself under another name.'
+  Enabled: true
+  Severity: convention
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/RSpec/LetIsMethodResult:
   Description: 'A let under an example group describing a method must not hold the result of calling that method on the subject.'
   Enabled: true

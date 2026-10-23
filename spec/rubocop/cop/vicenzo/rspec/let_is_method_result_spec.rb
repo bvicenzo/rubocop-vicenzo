@@ -95,6 +95,26 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LetIsMethodResult, :rspec_config do
       end
     end
 
+    context 'when the let calls the described method on a subject declared only in a nested group' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              let(:catch) { cat.catch(ball) }
+                            ^^^^^^^^^^^^^^^ #{catch_offense}
+
+              context 'when the cat is hungry' do
+                subject(:cat) { Cat.new }
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
     context 'when the let derives a value from the call' do
       it 'registers an offense' do
         catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
@@ -260,6 +280,24 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LetIsMethodResult, :rspec_config do
               subject(:cat) { Cat.new }
 
               let(:taken_ball) { Cat.catch(ball) }
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on a subject declared only in a sibling group' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              context 'when the cat is resting' do
+                let(:catch) { cat.catch(ball) }
+              end
+
+              context 'when the cat is hungry' do
+                subject(:cat) { Cat.new }
+              end
             end
           end
         RUBY
