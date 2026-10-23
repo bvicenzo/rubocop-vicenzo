@@ -17,7 +17,9 @@ module RuboCop
         # calling the cat `hunter` in half of the sentences does not add a character - it hides one.
         #
         # A subject that was declared without a name and is then given one by a `let` is the same thing the
-        # other way round: the name belongs to the subject's declaration, `subject(:hunter) { ... }`.
+        # other way round: the name belongs to the subject's declaration, `subject(:hunter) { ... }`. Inside a
+        # shared group that declares no named subject, the declaration lives where the group is included, so
+        # the subject is referred to as `subject`.
         #
         # This composes with `Vicenzo/RSpec/LetIsMethodResult`: once the alias is gone, a `let` that called
         # the described method through it calls it on the subject, and that cop reports it.
@@ -54,6 +56,19 @@ module RuboCop
         #   describe '#catch' do
         #     subject(:hunter) { Cat.new(name: 'Bixano') }
         #   end
+        #
+        # @example a shared group naming the subject of whoever includes it
+        #   # bad - the subject is declared where the group is included, under a name it cannot know
+        #   shared_examples 'a hunter' do
+        #     let(:hunter) { subject }
+        #
+        #     it { expect(hunter.catch(object: Ball.new)).to eq(:success) }
+        #   end
+        #
+        #   # good - `subject` holds wherever the group is included
+        #   shared_examples 'a hunter' do
+        #     it { expect(subject.catch(object: Ball.new)).to eq(:success) }
+        #   end
         class LetAliasingSubject < RuboCop::Cop::RSpec::Base
           include PremiseTracking
           include SubjectReference
@@ -70,7 +85,7 @@ module RuboCop
             names = subject_names(node)
             return unless subject_reference?(reference, names)
 
-            add_offense(node.send_node, message: message(premise_name(node), reference.method_name, names))
+            add_offense(node.send_node, message: message(node, reference.method_name, names))
           end
 
           alias on_numblock on_block
@@ -85,12 +100,19 @@ module RuboCop
           end
 
           # `subject` points at the nearest named subject when there is one; without it, the alias is the name
-          # the subject was missing.
-          def message(name, reference_name, names)
+          # the subject was missing. Inside a shared group the subject is declared where the group is included,
+          # under a name this group cannot know, so `subject` is the one name that holds everywhere.
+          def message(node, reference_name, names)
+            name = premise_name(node)
             subject = reference_name == :subject ? names.find { |candidate| candidate != :subject } : reference_name
-            return format(UNNAMED_MSG, name:) if subject.nil?
+            return format(MSG, name:, subject:) if subject
+            return format(MSG, name:, subject: :subject) if inside_shared_group?(node)
 
-            format(MSG, name:, subject:)
+            format(UNNAMED_MSG, name:)
+          end
+
+          def inside_shared_group?(node)
+            node.each_ancestor(:any_block).any? { |ancestor| shared_group?(ancestor) }
           end
         end
       end

@@ -115,6 +115,106 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LetIsMethodResult, :rspec_config do
       end
     end
 
+    context 'when the let and a named subject sit in the same shared group' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              shared_context 'with a cat' do
+                subject(:cat) { Cat.new }
+
+                let(:catch) { cat.catch(ball) }
+                              ^^^^^^^^^^^^^^^ #{catch_offense}
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let sits in a shared group under the group declaring the subject' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              subject(:cat) { Cat.new }
+
+              shared_context 'when the cat is hungry' do
+                let(:catch) { cat.catch(ball) }
+                              ^^^^^^^^^^^^^^^ #{catch_offense}
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let sits in a group under a shared group declaring the subject' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.shared_examples 'a hunter' do
+            subject(:cat) { Cat.new }
+
+            describe '#catch' do
+              let(:catch) { cat.catch(ball) }
+                            ^^^^^^^^^^^^^^^ #{catch_offense}
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on a subject declared only in a nested shared group' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              let(:catch) { cat.catch(ball) }
+                            ^^^^^^^^^^^^^^^ #{catch_offense}
+
+              shared_context 'with a cat' do
+                subject(:cat) { Cat.new }
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let sits in a shared group and the subject is declared only in a group nested in it' do
+      it 'registers an offense' do
+        catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
+                        'subject inside the expectation.'
+
+        expect_offense(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              shared_context 'with a hunter' do
+                let(:catch) { cat.catch(ball) }
+                              ^^^^^^^^^^^^^^^ #{catch_offense}
+
+                context 'when the cat is hungry' do
+                  subject(:cat) { Cat.new }
+                end
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
     context 'when the let derives a value from the call' do
       it 'registers an offense' do
         catch_offense = 'Let `:catch` holds what `catch` returned. Undo it and call `catch` on the ' \
@@ -297,6 +397,24 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::LetIsMethodResult, :rspec_config do
 
               context 'when the cat is hungry' do
                 subject(:cat) { Cat.new }
+              end
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when the let calls the described method on a subject declared only in a sibling shared group' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          RSpec.describe Cat do
+            describe '#catch' do
+              shared_context 'with a cat' do
+                subject(:cat) { Cat.new }
+              end
+
+              context 'when the cat is resting' do
+                let(:catch) { cat.catch(ball) }
               end
             end
           end
