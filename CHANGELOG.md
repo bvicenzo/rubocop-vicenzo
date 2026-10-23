@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.10.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.9.0...v0.10.0) (2026-10-23)
+
+
+### Features
+
+* add Vicenzo/RSpec/LetAliasingSubject cop ([#44](https://github.com/bvicenzo/rubocop-vicenzo/issues/44)) ([a8cebd3](https://github.com/bvicenzo/rubocop-vicenzo/commit/a8cebd3c0237e8805a58ff9efa7ca34f6beb34b0)), closes [#42](https://github.com/bvicenzo/rubocop-vicenzo/issues/42)
+* add Vicenzo/Style/PreferManyOverSizeComparison cop ([#38](https://github.com/bvicenzo/rubocop-vicenzo/issues/38)) ([910ea02](https://github.com/bvicenzo/rubocop-vicenzo/commit/910ea026f7e4c46f9de27db580e6330cf845bfe7))
+
+
+### Bug Fixes
+
+* report subjects that derive from an allowed method in SubjectIsMethodResult ([#41](https://github.com/bvicenzo/rubocop-vicenzo/issues/41)) ([a5efd33](https://github.com/bvicenzo/rubocop-vicenzo/commit/a5efd3330b32dd24b4291121a64e378091297a57)), closes [#40](https://github.com/bvicenzo/rubocop-vicenzo/issues/40)
+* see subjects declared in shared groups in LetIsMethodResult and LetAliasingSubject ([#45](https://github.com/bvicenzo/rubocop-vicenzo/issues/45)) ([a98039e](https://github.com/bvicenzo/rubocop-vicenzo/commit/a98039e2cbea568267d8b7832b4717b763678d14)), closes [#43](https://github.com/bvicenzo/rubocop-vicenzo/issues/43)
+
 ## [0.9.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.8.0...v0.9.0) (2026-09-23)
 
 
