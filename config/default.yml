@@ -136,7 +136,7 @@ Vicenzo/RSpec/LetAliasingSubject:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.10.0'
 
 Vicenzo/RSpec/LetIsMethodResult:
   Description: 'A let under an example group describing a method must not hold the result of calling that method on the subject.'
@@ -261,4 +261,4 @@ Vicenzo/Style/PreferManyOverSizeComparison:
   Enabled: true
   Severity: convention
   SafeAutoCorrect: false
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.10.0'
