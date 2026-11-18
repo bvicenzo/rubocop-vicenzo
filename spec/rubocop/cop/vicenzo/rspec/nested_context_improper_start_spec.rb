@@ -51,6 +51,43 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::NestedContextImproperStart, :rspec_
       end
     end
 
+    context 'when inner context starts with a forbidden word followed by punctuation' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          context 'when the product is for sale' do
+            context 'when, for some reason, the color pink is not available' do
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Nested `context` should start with `and` or `but`, not `when`, `with`, or `without`.
+              it 'does not show the pink option'
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when inner context starts with a longer word beginning with when' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          context 'when the product is for sale' do
+            context 'whenever the color pink is not available' do
+              it 'does not show the pink option'
+            end
+          end
+        RUBY
+      end
+    end
+
+    context 'when inner context starts with a longer word beginning with with' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          context 'when the product is for sale' do
+            context 'within the pink color range' do
+              it 'does not show the pink option'
+            end
+          end
+        RUBY
+      end
+    end
+
     context 'when inner context starts with and' do
       it 'does not register an offense' do
         expect_no_offenses(<<~RUBY)
