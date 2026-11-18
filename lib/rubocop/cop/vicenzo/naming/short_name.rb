@@ -26,6 +26,12 @@ module RuboCop
         # chosen, and it is that signature the parameter cops point at. The fix
         # cascades from there.
         #
+        # `AllowedNames` accepts short names that are whole words of the domain,
+        # such as `to` as the upper bound of a range. It is not a place for
+        # abbreviations (`db`, `io`): those are exactly what the cop is meant to
+        # catch. Leading underscores are ignored when matching, so `_to` is
+        # allowed along with `to`.
+        #
         # @example
         #   # bad
         #   v = shelf.capacity
@@ -71,6 +77,14 @@ module RuboCop
         #
         #   # good
         #   book_title = build
+        #
+        # @example AllowedNames: [to]
+        #   # bad
+        #   at = schedule.first
+        #
+        #   # good
+        #   from = options.fetch(:from)
+        #   to = options.fetch(:to)
         class ShortName < Base
           MSG = 'Name `%<name>s` spells %<length>d letter(s); at least %<minimum>d are required. ' \
                 'A letter or an abbreviation carries no meaning to the next reader — write the ' \
@@ -81,11 +95,13 @@ module RuboCop
 
           ANONYMOUS_NAME_PATTERN = /\A_+\z/
 
+          LEADING_UNDERSCORES_PATTERN = /\A_+/
+
           SCOPE_TYPES = %i[def defs block numblock itblock].freeze
 
           def on_lvasgn(node)
             name = node.children.first
-            return if anonymous?(name) || rescued_error?(node) || forwarded_by_shorthand?(node, name)
+            return if anonymous?(name) || allowed?(name) || rescued_error?(node) || forwarded_by_shorthand?(node, name)
 
             length = spelled_length(name)
             return if length >= min_name_length
@@ -103,6 +119,12 @@ module RuboCop
 
           def anonymous?(name)
             ANONYMOUS_NAME_PATTERN.match?(name.to_s)
+          end
+
+          # Leading underscores are stripped before the lookup, as the core
+          # `Naming/MethodParameterName` does, so `_to` is allowed along with `to`.
+          def allowed?(name)
+            allowed_names.include?(name.to_s.sub(LEADING_UNDERSCORES_PATTERN, ''))
           end
 
           def rescued_error?(node)
@@ -125,6 +147,10 @@ module RuboCop
 
           def min_name_length
             cop_config.fetch('MinNameLength', DEFAULT_MIN_NAME_LENGTH)
+          end
+
+          def allowed_names
+            cop_config.fetch('AllowedNames', [])
           end
         end
       end
