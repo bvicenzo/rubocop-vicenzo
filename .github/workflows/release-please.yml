@@ -56,3 +56,42 @@ jobs:
           else
             echo "No <<next>> placeholders to fill."
           fi
+
+      # release-please links every `(#N)` of the release notes to `/issues/N`, pull requests included, and
+      # GitHub's in-app navigation fails on those links ("Unable to load page"). Point the pull request
+      # numbers at `/pull/N`, in the CHANGELOG and in the release PR body: the GitHub Release notes are
+      # parsed from that body when the release PR is merged. release-please rewrites both on every run, so
+      # this step re-applies the links each time.
+      - name: Link pull requests in the release notes
+        if: ${{ steps.release.outputs.pr }}
+        env:
+          RELEASE_PR: ${{ steps.release.outputs.pr }}
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+        run: |
+          set -euo pipefail
+          branch="$(printf '%s' "$RELEASE_PR" | jq -r '.headBranchName')"
+          number="$(printf '%s' "$RELEASE_PR" | jq -r '.number')"
+          if [ -z "$branch" ] || [ "$branch" = "null" ]; then
+            echo "No release PR branch; nothing to do."
+            exit 0
+          fi
+          git fetch origin "$branch"
+          git checkout -B "$branch" "origin/$branch"
+          .github/scripts/link-pull-requests.sh "$GITHUB_REPOSITORY" CHANGELOG.md
+          if git diff --quiet; then
+            echo "CHANGELOG already links pull requests."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "chore: link pull requests in the CHANGELOG"
+            git push origin "$branch"
+          fi
+          body="$RUNNER_TEMP/release-pr-body.md"
+          gh pr view "$number" --json body --jq .body > "$body"
+          cp "$body" "$body.orig"
+          .github/scripts/link-pull-requests.sh "$GITHUB_REPOSITORY" "$body"
+          if cmp -s "$body" "$body.orig"; then
+            echo "Release PR body already links pull requests."
+          else
+            gh pr edit "$number" --body-file "$body"
+          fi
