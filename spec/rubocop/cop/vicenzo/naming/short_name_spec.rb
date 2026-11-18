@@ -175,5 +175,46 @@ RSpec.describe RuboCop::Cop::Vicenzo::Naming::ShortName, :config do
         end
       end
     end
+
+    context 'when AllowedNames is configured' do
+      let(:cop_config) { { 'AllowedNames' => ['to'] } }
+
+      context 'and the name is in the list' do
+        context 'and it is written as listed' do
+          it 'does not register an offense' do
+            expect_no_offenses(<<~RUBY)
+              to = options.fetch(:to)
+            RUBY
+          end
+        end
+
+        context 'and it carries leading underscores' do
+          it 'does not register an offense' do
+            expect_no_offenses(<<~RUBY)
+              _to = options.fetch(:to)
+            RUBY
+          end
+        end
+      end
+
+      context 'but the name is not in the list' do
+        context 'and it reaches the minimum length' do
+          it 'does not register an offense' do
+            expect_no_offenses(<<~RUBY)
+              from = options.fetch(:from)
+            RUBY
+          end
+        end
+
+        context 'and it spells fewer letters than the minimum' do
+          it 'registers an offense' do
+            expect_offense(<<~RUBY)
+              at = options.fetch(:at)
+              ^^ Name `at` spells 2 letter(s); at least 3 are required. [...]
+            RUBY
+          end
+        end
+      end
+    end
   end
 end

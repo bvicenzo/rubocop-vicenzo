@@ -16,6 +16,7 @@ Vicenzo/Naming/ShortName:
   Enabled: true
   Severity: convention
   MinNameLength: 3
+  AllowedNames: []
   VersionAdded: '0.9.0'
 
 Vicenzo/Rails/EnumInclusionOfValidation:

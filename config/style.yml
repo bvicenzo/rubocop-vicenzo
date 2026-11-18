@@ -130,11 +130,29 @@ Naming/RescuedExceptionsVariableName:
   Enabled: true
   PreferredName: error
 
+# Short names that are whole English words, such as `to` as the upper bound of a
+# range. Only whole words belong here: the abbreviations in the core
+# Naming/MethodParameterName default (`db`, `io`, `ip`, `os`, `pp`, `cc`) are left
+# out on purpose, since they are exactly what the rule is meant to catch.
+Vicenzo/Naming/ShortName:
+  AllowedNames:
+    - to
+    - at
+    - by
+    - of
+    - on
+
 # Vicenzo/Naming/ShortName covers local variables. Block parameters are the core
 # cop's job, but it ships with MinNameLength: 1 and therefore never fires — raise
-# it so both halves of the rule agree.
+# it, and allow the same whole words, so both halves of the rule agree.
 Naming/BlockParameterName:
   MinNameLength: 3
+  AllowedNames:
+    - to
+    - at
+    - by
+    - of
+    - on
 
 ###### METRICS #####
 
