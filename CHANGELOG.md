@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.11.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.10.0...v0.11.0) (2026-11-18)
+
+
+### Features
+
+* add Vicenzo/RSpec/ScenarioDescribe cop ([#54](https://github.com/bvicenzo/rubocop-vicenzo/issues/54)) ([df050f7](https://github.com/bvicenzo/rubocop-vicenzo/commit/df050f7e013b029a009c7445b30de739132de4b4)), closes [#48](https://github.com/bvicenzo/rubocop-vicenzo/issues/48)
+* allow whole short words in Vicenzo/Naming/ShortName via AllowedNames ([#51](https://github.com/bvicenzo/rubocop-vicenzo/issues/51)) ([972ff35](https://github.com/bvicenzo/rubocop-vicenzo/commit/972ff35e376b4364876b7638d2838d5593e69ea9)), closes [#47](https://github.com/bvicenzo/rubocop-vicenzo/issues/47)
+
+
+### Bug Fixes
+
+* remove 'however' from the context prefix vocabulary ([#49](https://github.com/bvicenzo/rubocop-vicenzo/issues/49)) ([0c46397](https://github.com/bvicenzo/rubocop-vicenzo/commit/0c46397b7fd04c943ae0f974d26f48cb80de17f0)), closes [#46](https://github.com/bvicenzo/rubocop-vicenzo/issues/46)
+* report nested contexts whose forbidden first word is followed by punctuation ([#52](https://github.com/bvicenzo/rubocop-vicenzo/issues/52)) ([e103531](https://github.com/bvicenzo/rubocop-vicenzo/commit/e1035314d769f9e3a68cb6ba3d5ce98eab588bf4)), closes [#50](https://github.com/bvicenzo/rubocop-vicenzo/issues/50)
+
 ## [0.10.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.9.0...v0.10.0) (2026-10-23)
 
 
