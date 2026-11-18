@@ -5,7 +5,7 @@ module RuboCop
     module Vicenzo
       module RSpec
         # Checks for nested `context` blocks where the inner `context`
-        # starts with "when", "with", or "without". It suggests replacing it with "and", "but", or "however".
+        # starts with "when", "with", or "without". It suggests replacing it with "and" or "but".
         #
         # @example
         #   # bad
@@ -22,7 +22,7 @@ module RuboCop
         #     end
         #   end
         class NestedContextImproperStart < RuboCop::Cop::RSpec::Base
-          MSG = 'Nested `context` should start with `and`, `but`, or `however`, not `when`, `with`, or `without`.'
+          MSG = 'Nested `context` should start with `and` or `but`, not `when`, `with`, or `without`.'
 
           FORBIDDEN_PREFIXES = %w[when with without].freeze
 
