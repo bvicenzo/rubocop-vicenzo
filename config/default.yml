@@ -151,6 +151,17 @@ Vicenzo/RSpec/LetIsMethodResult:
     - '**/spec/factories/**/*'
   VersionAdded: '0.7.0'
 
+Vicenzo/RSpec/ScenarioDescribe:
+  Description: 'A describe exercising an entry point a sibling describe already names is a scenario of it, and belongs in a context inside that describe.'
+  Enabled: true
+  Severity: warning
+  Include:
+    - '**/spec/**/*_spec.rb'
+  Exclude:
+    - '**/spec/support/**/*'
+    - '**/spec/factories/**/*'
+  VersionAdded: '<<next>>'
+
 Vicenzo/RSpec/SubjectDefinedAsLet:
   Description: 'A let the expectations assert on, in a group declaring no subject, must be declared as the subject.'
   Enabled: true
