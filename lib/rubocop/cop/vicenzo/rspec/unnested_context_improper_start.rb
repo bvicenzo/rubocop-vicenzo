@@ -4,7 +4,7 @@ module RuboCop
   module Cop
     module Vicenzo
       module RSpec
-        # Checks for `context` blocks with no parent scenario that start with "and", "but", or "however".
+        # Checks for `context` blocks with no parent scenario that start with "and" or "but".
         # It suggests starting them with "when", "with", or "without" instead.
         #
         # A conjunction continues the scenario of the enclosing context. When the closest example group is
@@ -34,7 +34,7 @@ module RuboCop
         #     end
         #   end
         #
-        # @example ForbiddenPrefixes: ['and', 'but', 'however', 'also']
+        # @example ForbiddenPrefixes: ['and', 'but', 'also']
         #   # bad
         #   describe '#available_colors' do
         #     context 'also when the color pink is not available' do
@@ -45,7 +45,7 @@ module RuboCop
           MSG = 'Unnested `context` should start with `when`, `with`, or `without`, not `%<prefix>s`.'
 
           CONTEXTS = %i[context fcontext xcontext].freeze
-          DEFAULT_FORBIDDEN_PREFIXES = %w[and but however].freeze
+          DEFAULT_FORBIDDEN_PREFIXES = %w[and but].freeze
 
           # @!method context_definition?(node)
           def_node_matcher :context_definition?, <<~PATTERN

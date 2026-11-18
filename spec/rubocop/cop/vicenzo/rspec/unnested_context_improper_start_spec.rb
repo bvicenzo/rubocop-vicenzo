@@ -28,12 +28,12 @@ RSpec.describe RuboCop::Cop::Vicenzo::RSpec::UnnestedContextImproperStart, :rspe
       end
     end
 
-    context 'when a context under a describe starts with however' do
+    context 'when a context under a describe starts with but followed by a comma' do
       it 'registers an offense' do
         expect_offense(<<~RUBY)
           describe '#available_colors' do
-            context 'however, the color pink is not available' do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `however`.
+            context 'but, the color pink is not available' do
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unnested `context` should start with `when`, `with`, or `without`, not `but`.
               it 'does not show the pink option'
             end
           end

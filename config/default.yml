@@ -236,7 +236,6 @@ Vicenzo/RSpec/UnnestedContextImproperStart:
   ForbiddenPrefixes:
     - and
     - but
-    - however
   Include:
     - '**/spec/**/*_spec.rb'
   Exclude:
