@@ -59,8 +59,7 @@ module RuboCop
 
             return unless description_node&.str_type?
 
-            text = description_node.value.to_s.strip
-            first_word = text.split.first&.downcase
+            first_word = description_node.value.lstrip[/\A[[:alpha:]]+/]&.downcase
 
             return unless FORBIDDEN_PREFIXES.include?(first_word)
 
