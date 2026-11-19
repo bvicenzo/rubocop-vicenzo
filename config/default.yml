@@ -160,7 +160,7 @@ Vicenzo/RSpec/ScenarioDescribe:
   Exclude:
     - '**/spec/support/**/*'
     - '**/spec/factories/**/*'
-  VersionAdded: '<<next>>'
+  VersionAdded: '0.11.0'
 
 Vicenzo/RSpec/SubjectDefinedAsLet:
   Description: 'A let the expectations assert on, in a group declaring no subject, must be declared as the subject.'

@@ -1,50 +1,64 @@
 # Changelog
 
+## [0.11.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.10.0...v0.11.0) (2026-11-18)
+
+
+### Features
+
+* add Vicenzo/RSpec/ScenarioDescribe cop ([#54](https://github.com/bvicenzo/rubocop-vicenzo/pull/54)) ([df050f7](https://github.com/bvicenzo/rubocop-vicenzo/commit/df050f7e013b029a009c7445b30de739132de4b4)), closes [#48](https://github.com/bvicenzo/rubocop-vicenzo/issues/48)
+* allow whole short words in Vicenzo/Naming/ShortName via AllowedNames ([#51](https://github.com/bvicenzo/rubocop-vicenzo/pull/51)) ([972ff35](https://github.com/bvicenzo/rubocop-vicenzo/commit/972ff35e376b4364876b7638d2838d5593e69ea9)), closes [#47](https://github.com/bvicenzo/rubocop-vicenzo/issues/47)
+
+
+### Bug Fixes
+
+* remove 'however' from the context prefix vocabulary ([#49](https://github.com/bvicenzo/rubocop-vicenzo/pull/49)) ([0c46397](https://github.com/bvicenzo/rubocop-vicenzo/commit/0c46397b7fd04c943ae0f974d26f48cb80de17f0)), closes [#46](https://github.com/bvicenzo/rubocop-vicenzo/issues/46)
+* report nested contexts whose forbidden first word is followed by punctuation ([#52](https://github.com/bvicenzo/rubocop-vicenzo/pull/52)) ([e103531](https://github.com/bvicenzo/rubocop-vicenzo/commit/e1035314d769f9e3a68cb6ba3d5ce98eab588bf4)), closes [#50](https://github.com/bvicenzo/rubocop-vicenzo/issues/50)
+
 ## [0.10.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.9.0...v0.10.0) (2026-10-23)
 
 
 ### Features
 
-* add Vicenzo/RSpec/LetAliasingSubject cop ([#44](https://github.com/bvicenzo/rubocop-vicenzo/issues/44)) ([a8cebd3](https://github.com/bvicenzo/rubocop-vicenzo/commit/a8cebd3c0237e8805a58ff9efa7ca34f6beb34b0)), closes [#42](https://github.com/bvicenzo/rubocop-vicenzo/issues/42)
-* add Vicenzo/Style/PreferManyOverSizeComparison cop ([#38](https://github.com/bvicenzo/rubocop-vicenzo/issues/38)) ([910ea02](https://github.com/bvicenzo/rubocop-vicenzo/commit/910ea026f7e4c46f9de27db580e6330cf845bfe7))
+* add Vicenzo/RSpec/LetAliasingSubject cop ([#44](https://github.com/bvicenzo/rubocop-vicenzo/pull/44)) ([a8cebd3](https://github.com/bvicenzo/rubocop-vicenzo/commit/a8cebd3c0237e8805a58ff9efa7ca34f6beb34b0)), closes [#42](https://github.com/bvicenzo/rubocop-vicenzo/issues/42)
+* add Vicenzo/Style/PreferManyOverSizeComparison cop ([#38](https://github.com/bvicenzo/rubocop-vicenzo/pull/38)) ([910ea02](https://github.com/bvicenzo/rubocop-vicenzo/commit/910ea026f7e4c46f9de27db580e6330cf845bfe7))
 
 
 ### Bug Fixes
 
-* report subjects that derive from an allowed method in SubjectIsMethodResult ([#41](https://github.com/bvicenzo/rubocop-vicenzo/issues/41)) ([a5efd33](https://github.com/bvicenzo/rubocop-vicenzo/commit/a5efd3330b32dd24b4291121a64e378091297a57)), closes [#40](https://github.com/bvicenzo/rubocop-vicenzo/issues/40)
-* see subjects declared in shared groups in LetIsMethodResult and LetAliasingSubject ([#45](https://github.com/bvicenzo/rubocop-vicenzo/issues/45)) ([a98039e](https://github.com/bvicenzo/rubocop-vicenzo/commit/a98039e2cbea568267d8b7832b4717b763678d14)), closes [#43](https://github.com/bvicenzo/rubocop-vicenzo/issues/43)
+* report subjects that derive from an allowed method in SubjectIsMethodResult ([#41](https://github.com/bvicenzo/rubocop-vicenzo/pull/41)) ([a5efd33](https://github.com/bvicenzo/rubocop-vicenzo/commit/a5efd3330b32dd24b4291121a64e378091297a57)), closes [#40](https://github.com/bvicenzo/rubocop-vicenzo/issues/40)
+* see subjects declared in shared groups in LetIsMethodResult and LetAliasingSubject ([#45](https://github.com/bvicenzo/rubocop-vicenzo/pull/45)) ([a98039e](https://github.com/bvicenzo/rubocop-vicenzo/commit/a98039e2cbea568267d8b7832b4717b763678d14)), closes [#43](https://github.com/bvicenzo/rubocop-vicenzo/issues/43)
 
 ## [0.9.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.8.0...v0.9.0) (2026-09-23)
 
 
 ### Features
 
-* add Vicenzo/Naming/AnonymousUnusedName cop ([#33](https://github.com/bvicenzo/rubocop-vicenzo/issues/33)) ([fabbad6](https://github.com/bvicenzo/rubocop-vicenzo/commit/fabbad655dac0c362924dd0aaf245abd2c7023e1))
-* add Vicenzo/Naming/ShortName cop and an opinionated config/style.yml ([#35](https://github.com/bvicenzo/rubocop-vicenzo/issues/35)) ([1b67f46](https://github.com/bvicenzo/rubocop-vicenzo/commit/1b67f4643b4348f5768a8fbb3b88cea35046e5e2))
-* add Vicenzo/RSpec/DescribeInsideContext cop ([#37](https://github.com/bvicenzo/rubocop-vicenzo/issues/37)) ([3f3d6ae](https://github.com/bvicenzo/rubocop-vicenzo/commit/3f3d6aeb95d087e32594e8ded3d1ce0e3715dee7))
-* add Vicenzo/RSpec/UnnestedContextImproperStart cop ([#36](https://github.com/bvicenzo/rubocop-vicenzo/issues/36)) ([0a8fb0f](https://github.com/bvicenzo/rubocop-vicenzo/commit/0a8fb0fec62370ac331b9a3275b95a0b22998b1d))
+* add Vicenzo/Naming/AnonymousUnusedName cop ([#33](https://github.com/bvicenzo/rubocop-vicenzo/pull/33)) ([fabbad6](https://github.com/bvicenzo/rubocop-vicenzo/commit/fabbad655dac0c362924dd0aaf245abd2c7023e1))
+* add Vicenzo/Naming/ShortName cop and an opinionated config/style.yml ([#35](https://github.com/bvicenzo/rubocop-vicenzo/pull/35)) ([1b67f46](https://github.com/bvicenzo/rubocop-vicenzo/commit/1b67f4643b4348f5768a8fbb3b88cea35046e5e2))
+* add Vicenzo/RSpec/DescribeInsideContext cop ([#37](https://github.com/bvicenzo/rubocop-vicenzo/pull/37)) ([3f3d6ae](https://github.com/bvicenzo/rubocop-vicenzo/commit/3f3d6aeb95d087e32594e8ded3d1ce0e3715dee7))
+* add Vicenzo/RSpec/UnnestedContextImproperStart cop ([#36](https://github.com/bvicenzo/rubocop-vicenzo/pull/36)) ([0a8fb0f](https://github.com/bvicenzo/rubocop-vicenzo/commit/0a8fb0fec62370ac331b9a3275b95a0b22998b1d))
 
 ## [0.8.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.7.0...v0.8.0) (2026-09-09)
 
 
 ### Features
 
-* add RSpec cops against top-level declarations ([#31](https://github.com/bvicenzo/rubocop-vicenzo/issues/31)) ([ef5e207](https://github.com/bvicenzo/rubocop-vicenzo/commit/ef5e20728c0c4bc94dbb5eec54a48ff5197d1b25))
+* add RSpec cops against top-level declarations ([#31](https://github.com/bvicenzo/rubocop-vicenzo/pull/31)) ([ef5e207](https://github.com/bvicenzo/rubocop-vicenzo/commit/ef5e20728c0c4bc94dbb5eec54a48ff5197d1b25))
 
 ## [0.7.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.6.0...v0.7.0) (2026-08-31)
 
 
 ### Features
 
-* add RSpec cops against subjects hidden in lets ([#30](https://github.com/bvicenzo/rubocop-vicenzo/issues/30)) ([9daf259](https://github.com/bvicenzo/rubocop-vicenzo/commit/9daf25972252fdfdb92a51bba9cfe70e63446d17))
-* add Vicenzo/RSpec/SubjectIsMethodResult cop ([#28](https://github.com/bvicenzo/rubocop-vicenzo/issues/28)) ([b69245a](https://github.com/bvicenzo/rubocop-vicenzo/commit/b69245af973f3341bbe62bca628333c5acb909d7))
+* add RSpec cops against subjects hidden in lets ([#30](https://github.com/bvicenzo/rubocop-vicenzo/pull/30)) ([9daf259](https://github.com/bvicenzo/rubocop-vicenzo/commit/9daf25972252fdfdb92a51bba9cfe70e63446d17))
+* add Vicenzo/RSpec/SubjectIsMethodResult cop ([#28](https://github.com/bvicenzo/rubocop-vicenzo/pull/28)) ([b69245a](https://github.com/bvicenzo/rubocop-vicenzo/commit/b69245af973f3341bbe62bca628333c5acb909d7))
 
 ## [0.6.0](https://github.com/bvicenzo/rubocop-vicenzo/compare/v0.5.0...v0.6.0) (2026-08-19)
 
 
 ### Features
 
-* add RSpec cops against mutated and derived premises ([#26](https://github.com/bvicenzo/rubocop-vicenzo/issues/26)) ([b138dd0](https://github.com/bvicenzo/rubocop-vicenzo/commit/b138dd00a76e1bcd62e95c1f2c51dca5b4232319))
+* add RSpec cops against mutated and derived premises ([#26](https://github.com/bvicenzo/rubocop-vicenzo/pull/26)) ([b138dd0](https://github.com/bvicenzo/rubocop-vicenzo/commit/b138dd00a76e1bcd62e95c1f2c51dca5b4232319))
 
 ## [0.5.0] - 2026-06-29
 
