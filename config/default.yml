@@ -162,6 +162,15 @@ Vicenzo/RSpec/ScenarioDescribe:
     - '**/spec/factories/**/*'
   VersionAdded: '0.11.0'
 
+Vicenzo/RSpec/SharedPremises:
+  Description: 'Do not share premises through a shared context; declare them in the scenario that reads them, and share only complete behaviour through shared examples.'
+  Enabled: true
+  Severity: warning
+  AllowedContexts: []
+  Include:
+    - '**/spec/**/*.rb'
+  VersionAdded: '<<next>>'
+
 Vicenzo/RSpec/SubjectDefinedAsLet:
   Description: 'A let the expectations assert on, in a group declaring no subject, must be declared as the subject.'
   Enabled: true
